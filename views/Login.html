@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="/public/css/Styles.css">
+    <style>
+        .description h1, .titledesc {
+            transition: opacity 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+<div class="master">
+    <div class="container">
+        <h2><Center>Retail Kita</Center></h2>
+        <h4><center>Sign in with credentials</center></h4>
+        <form>
+            <label for="username">Email:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
+
+    <div class="description">
+        <h1>Hello folks, we are 
+            <p>Retail Kita.</p></h1>
+        <p class="titledesc">We sell high-quality products to fulfill your needs.</p>
+    </div>
+
+    <div class="list">
+        <ul>
+            <li id="aboutListItem">
+                About :
+                <p> Click here to know more about us!</p>
+            </li>
+            <li>Contact:
+                <p> +62 081680085</p>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="follow-us">
+    <p>Follow Us:</p>
+    <a> Facebook |</a>
+    <a> Instagram |</a>
+    <a> LinkedIn</a>
+</div>
+
+<script>
+    document.getElementById('aboutListItem').addEventListener('click', function() {
+        document.querySelector('.description h1').style.opacity = '0';
+        document.querySelector('.titledesc').style.opacity = '0';
+
+        setTimeout(function() {
+            document.querySelector('.description h1').textContent = 'About us:';
+            document.querySelector('.titledesc').textContent = 'Retail Kita adalah sebuah perangkat lunak untuk menampilkan informasi data promosi sebuah Toko Retail. Proyek ini adalah hasil kerja tim kami sebagai proyek tugas besar kelas Manajemen Proyek';
+
+            document.querySelector('.description h1').style.opacity = '1';
+            document.querySelector('.titledesc').style.opacity = '1';
+        }, 500); 
+    });
+</script>
+</body>
+</html>
