@@ -31,6 +31,8 @@
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <!-- Main Styling -->
     <link href="../assets/css/soft-ui-dashboard-tailwind.css" rel="stylesheet" />
+    <!-- Upload Data-->
+    <link rel="stylesheet"  href="../assets/css/output.css">
 
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
@@ -187,6 +189,32 @@
         <div class="flex flex-wrap -mx-3">
         
     </main>
+    <!-- Upload Data -->
+    <body class="bg-gradient-to-br from-cyan-100 to-purple-100 h-screen flex items-center justify-center">
+      <div class="flex flex-col items-center font-poppins drop-shadow-xl bg-white rounded-xl">
+          <div class="flex flex-col items-center">
+              <div class="mt-[80px] text-[25px]">Upload Berkas Data Penjualan dan Pembelian</div>
+          </div>
+          <form method="post" action="/register/upload-nilai" enctype="multipart/form-data">
+              <div class="flex flex-col items-center bg-gray-50 rounded-md drop-shadow-lg w-[340px] h-[290px] mt-[30px]">
+                  <div class="text-[14px] text-gray-500 mt-[15px]">Drop file to upload</div>
+                  <hr class="mt-[10px] h-[5px] w-[200px]">
+                  <img src="../assets/images/upload_icon.png" class="w-[75px] mt-[10px] border-2 border-gray-300 border-dotted p-[15px]">
+                  <label for="upload_file-btn" class="flex items-center justify-center w-[100px] h-[30px] mt-[15px] bg-rose-500 text-[12px] text-white rounded-sm cursor-pointer hover:bg-rose-700">
+                      <input type="file" class="hidden" name="nilai" id="upload_file-btn" accept="application/pdf" onchange="displayFileName(this)" >
+                      Upload File
+                  </label> 
+                  <p id="selected_file_name" class="mt-2 text-gray-700">No file selected</p>
+                
+                  <p class="mt-[5px] text-[12px] text-gray-500 text-center w-[300px]"></p>
+              </div>
+            
+
+          </form>
+          
+      </div>
+  </body>
+
   </body>
   <!-- plugin for charts  -->
   <script src="../assets/js/plugins/chartjs.min.js" async></script>
@@ -196,4 +224,13 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- main script file  -->
   <script src="../assets/js/soft-ui-dashboard-tailwind.js" async></script>
+
+   <!-- Upload Data  -->
+  <script>
+    function displayFileName(input) {
+      const fileName = input.files[0] ? input.files[0].name : "No file selected";
+      document.getElementById("selected_file_name").textContent = fileName;
+    }
+  </script>
+
 </html>
