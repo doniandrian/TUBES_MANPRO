@@ -24,6 +24,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Nucleo Icons -->
     <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
     <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
@@ -178,11 +179,137 @@
           </div>
         </div>
       </nav>
+
+      <!-- end Navbar -->
+
+      <!-- cards -->
       <div class="w-full px-6 py-6 mx-auto">
         <!-- row 1 -->
         <div class="flex flex-wrap -mx-3">
         
     </main>
+    <body>
+      <div class="master">
+        <div class="dropdowncat">
+          <div class="dropdowntableft">
+            <p>Ringkasan Berdasarkan :</p>
+            <select name="RingkasBerdasarkan" id="LeftChartDropdown">
+              <option value="">Jumlah Produk Ikan</option>
+            </select>
+          </div>
+    
+          <div class="dropdowntab">
+            <p>Ringkasan Berdasarkan :</p>
+            <select name="RingkasBerdasarkan" id="Attribut1">
+              <option value="10">Attribut 1 - Value 1</option>
+              <option value="15">Attribut 1 - Value 2</option>
+              <!-- Add more options as needed -->
+            </select>
+          </div>
+    
+          <div class="dropdowntab">
+            <p>Ringkasan Berdasarkan :</p>
+            <select name="RingkasBerdasarkan" id="Attribut2">
+              <option value="20">Attribut 2 - Value 1</option>
+              <option value="25">Attribut 2 - Value 2</option>
+              <!-- Add more options as needed -->
+            </select>
+          </div>
+        </div>
+    
+        <div class="chartMater">
+          <div class="LeftChart">
+            <canvas id="barChart" width="300" height="300"></canvas>
+          </div>
+    
+          <div class="RightChart">
+            <canvas id="scatterChart" width="300" height="300"></canvas>
+          </div>
+        </div>
+      </div>
+    
+      <script>
+        function updateCharts() {
+          // Get selected attributes from dropdowns
+          const attribut1 = document.getElementById('Attribut1').value;
+          const attribut2 = document.getElementById('Attribut2').value;
+          const jumlahProdukIkan = document.getElementById('LeftChartDropdown').value;
+    
+          // Update LeftChart (Bar Chart)
+          const leftChartCanvas = document.getElementById('barChart').getContext('2d');
+          if (window.myBarChart) {
+            window.myBarChart.destroy();
+          }
+          window.myBarChart = new Chart(leftChartCanvas, {
+            type: 'bar',
+            data: {
+              labels: ['Data'],
+              datasets: [{
+                label: 'Jumlah Produk Ikan',
+                data: [jumlahProdukIkan],
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+    
+          // Update RightChart (Scatter Plot)
+          const rightChartCanvas = document.getElementById('scatterChart').getContext('2d');
+          if (window.myScatterChart) {
+            window.myScatterChart.destroy();
+          }
+          window.myScatterChart = new Chart(rightChartCanvas, {
+            type: 'scatter',
+            data: {
+              datasets: [{
+                label: 'Scatter Plot',
+                data: [{ x: attribut1, y: attribut2 }],
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+              }]
+            },
+            options: {
+              scales: {
+                x: {
+                  type: 'linear',
+                  position: 'bottom',
+                  title: {
+                    display: true,
+                    text: 'Attribut 1'
+                  }
+                },
+                y: {
+                  type: 'linear',
+                  position: 'left',
+                  title: {
+                    display: true,
+                    text: 'Attribut 2'
+                  }
+                }
+              }
+            }
+          });
+        }
+    
+        // Attach the updateCharts function to the change event of the dropdowns
+        document.getElementById('Attribut1').addEventListener('change', updateCharts);
+        document.getElementById('Attribut2').addEventListener('change', updateCharts);
+        document.getElementById('LeftChartDropdown').addEventListener('change', updateCharts);
+    
+        // Initial chart setup
+        updateCharts();
+      </script>
+    </body>
+
   </body>
   <!-- plugin for charts  -->
   <script src="../assets/js/plugins/chartjs.min.js" async></script>
