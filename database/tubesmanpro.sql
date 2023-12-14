@@ -129,8 +129,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ucs2 COLLATE=ucs2_bin;
 
--- Dumping data for table tubesmanpro.users: ~0 rows (approximately)
+-- Dumping data for table tubesmanpro.users: ~1 rows (approximately)
 DELETE FROM `users`;
+INSERT INTO `users` (`username`, `pass`) VALUES
+	('admin', 'password');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
