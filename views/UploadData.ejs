@@ -17,22 +17,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/images/apple-icon.png" />
-    <link rel="icon" type="image/png" href="../assets/images/favicon.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="images/apple-icon.png" />
+    <link rel="icon" type="image/png" href="images/favicon.png" />
     <title>Retail Kita</title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Nucleo Icons -->
-    <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="css/nucleo-icons.css" rel="stylesheet" />
+    <link href="css/nucleo-svg.css" rel="stylesheet" />
     <!-- Popper -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <!-- Main Styling -->
-    <link href="../assets/css/soft-ui-dashboard-tailwind.css" rel="stylesheet" />
+    <link href="css/soft-ui-dashboard-tailwind.css" rel="stylesheet" />
     <!-- Upload Data-->
-    <link rel="stylesheet"  href="../assets/css/output.css">
+    <link rel="stylesheet"  href="css/output.css">
 
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
@@ -44,8 +44,8 @@
     <aside class="max-w-62.5 ease-nav-brand z-990 fixed inset-y-0 my-4 ml-4 block w-full -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent">
       <div class="h-19.5">
         <i class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden" sidenav-close></i>
-        <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700" href="../pages/Dashboard.html">
-          <img src="../assets/images/logo-ct.png" class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8" alt="main_logo" />
+        <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700" href="/dashboard">
+          <img src="images/logo-ct.png" class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8" alt="main_logo" />
           <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Retail Kita</span>
         </a>
       </div>
@@ -55,7 +55,7 @@
       <div class="items-center block w-auto max-h-screen overflow-auto h-sidenav grow basis-full">
         <ul class="flex flex-col pl-0 mb-0">
           <li class="mt-0.5 w-full">
-            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="../pages/dashboard.html">
+            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="/dashboard">
               <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                 <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <title>shop</title>
@@ -103,7 +103,7 @@
           </li>
 
           <li class="mt-0.5 w-full">
-            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="../pages/Grafik.html">
+            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="/grafik">
               <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center fill-current stroke-0 text-center xl:p-2.5">
                 <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <title>credit-card</title>
@@ -173,7 +173,7 @@
               <li class="flex items-center">
                 <a href="../pages/Login.html" class="block px-0 py-2 font-semibold transition-all ease-nav-brand text-sm text-slate-500">
                   <i class="fa fa-user sm:mr-1"></i>
-                  <span class="hidden sm:inline">Sign In</span>
+                  <span class="hidden sm:inline">Admin</span>
                 </a>
               </li>
             </ul>
@@ -185,45 +185,49 @@
 
       <!-- cards -->
       <div class="w-full px-6 py-6 mx-auto">
-        <!-- row 1 -->
-        <div class="flex flex-wrap -mx-3">
-        
-    </main>
-    <!-- Upload Data -->
-    <body class="bg-gradient-to-br from-cyan-100 to-purple-100 h-screen flex items-center justify-center">
-      <div class="flex flex-col items-center font-poppins drop-shadow-xl bg-white rounded-xl">
+        <div class="flex flex-col items-center w-full h-full font-poppins drop-shadow-xl  rounded-xl">
           <div class="flex flex-col items-center">
-              <div class="mt-[80px] text-[25px]">Upload Berkas Data Penjualan dan Pembelian</div>
+              <div class="mt-[80px] text-[25px]">Upload Data Retail</div>
+              <div class="text-[13px] text-gray-500">Marketing Campaign (CSV)</div>
           </div>
           <form method="post" action="/register/upload-nilai" enctype="multipart/form-data">
-              <div class="flex flex-col items-center bg-gray-50 rounded-md drop-shadow-lg w-[340px] h-[290px] mt-[30px]">
+              <div class="flex flex-col items-center bg-gray-50 rounded-md drop-shadow-lg w-[340px] h-[290px] mt-[50px]">
                   <div class="text-[14px] text-gray-500 mt-[15px]">Drop file to upload</div>
                   <hr class="mt-[10px] h-[5px] w-[200px]">
-                  <img src="../assets/images/upload_icon.png" class="w-[75px] mt-[10px] border-2 border-gray-300 border-dotted p-[15px]">
+                  <img src="images/upload_icon.png" class="w-[75px] mt-[10px] border-2 border-gray-300 border-dotted p-[15px]">
                   <label for="upload_file-btn" class="flex items-center justify-center w-[100px] h-[30px] mt-[15px] bg-rose-500 text-[12px] text-white rounded-sm cursor-pointer hover:bg-rose-700">
-                      <input type="file" class="hidden" name="nilai" id="upload_file-btn" accept="application/pdf" onchange="displayFileName(this)" >
+                      <input type="file" class="hidden" name="file" id="upload_file-btn" accept=".csv" onchange="displayFileName(this)" >
                       Upload File
                   </label> 
                   <p id="selected_file_name" class="mt-2 text-gray-700">No file selected</p>
-                
-                  <p class="mt-[5px] text-[12px] text-gray-500 text-center w-[300px]"></p>
               </div>
-            
+              <div class="flex items-center justify-center mt-[50px] gap-[10px]">
+                <button
+                  type="button"
+                  type="submit"
+                  class="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded"
+                >
+                  Submit
+                </button>
+              </div>
 
           </form>
           
       </div>
-  </body>
-
+        <!-- row 1 -->
+        <div class="flex flex-wrap -mx-3">
+        
+    </main>
+    
   </body>
   <!-- plugin for charts  -->
-  <script src="../assets/js/plugins/chartjs.min.js" async></script>
+  <script src="js/plugins/chartjs.min.js" async></script>
   <!-- plugin for scrollbar  -->
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js" async></script>
+  <script src="js/plugins/perfect-scrollbar.min.js" async></script>
   <!-- github button -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- main script file  -->
-  <script src="../assets/js/soft-ui-dashboard-tailwind.js" async></script>
+  <script src="js/soft-ui-dashboard-tailwind.js" async></script>
 
    <!-- Upload Data  -->
   <script>
