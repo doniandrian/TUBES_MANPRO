@@ -1,0 +1,1 @@
+![Contoh ERD](/database/ERD.png)
