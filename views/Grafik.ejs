@@ -17,8 +17,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/images/apple-icon.png" />
-    <link rel="icon" type="image/png" href="../assets/images/favicon.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="images/apple-icon.png" />
+    <link rel="icon" type="image/png" href="images/favicon.png" />
     <title>Retail Kita</title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -26,12 +26,12 @@
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Nucleo Icons -->
-    <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="css/nucleo-icons.css" rel="stylesheet" />
+    <link href="css/nucleo-svg.css" rel="stylesheet" />
     <!-- Popper -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <!-- Main Styling -->
-    <link href="../assets/css/soft-ui-dashboard-tailwind.css" rel="stylesheet" />
+    <link href="css/soft-ui-dashboard-tailwind.css" rel="stylesheet" />
 
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
@@ -44,7 +44,7 @@
       <div class="h-19.5">
         <i class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden" sidenav-close></i>
         <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700" href="javascript:;" target="_blank">
-          <img src="../assets/images/logo-ct.png" class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8" alt="main_logo" />
+          <img src="images/logo-ct.png" class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8" alt="main_logo" />
           <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Retail Kita</span>
         </a>
       </div>
@@ -54,7 +54,7 @@
       <div class="items-center block w-auto max-h-screen overflow-auto h-sidenav grow basis-full">
         <ul class="flex flex-col pl-0 mb-0">
           <li class="mt-0.5 w-full">
-            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="../pages/dashboard.html">
+            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="/dashboard">
               <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                 <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <title>shop</title>
@@ -81,7 +81,7 @@
           </li>
 
           <li class="mt-0.5 w-full">
-            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="../pages/UploadData.html">
+            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="/upload">
               <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                 <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <title>office</title>
@@ -172,7 +172,7 @@
               <li class="flex items-center">
                 <a href="../pages/sign-in.html" class="block px-0 py-2 font-semibold transition-all ease-nav-brand text-sm text-slate-500">
                   <i class="fa fa-user sm:mr-1"></i>
-                  <span class="hidden sm:inline">User</span>
+                  <span class="hidden sm:inline">Admin</span>
                 </a>
               </li>
             </ul>
@@ -192,82 +192,131 @@
       <div class="master">
         <div class="dropdowncat">
           <div class="dropdowntableft">
-            <p>Agregat Menggunakan :</p>
+            <p>Ringkasan Berdasarkan :</p>
             <select name="RingkasBerdasarkan" id="LeftChartDropdown">
-              <option value="">Pilih fungsi:</option>
-              <option value="">SUM (Cari nilai jumlah total)</option>
-              <option value="">COUNT (Hitung jumlah data)</option>
-              <option value="">AVG (Hitung rata - rata data)</option>
+              <option value="">Jumlah Produk Ikan</option>
             </select>
           </div>
     
           <div class="dropdowntab">
-            <p>Atribut Target :</p>
+            <p>Ringkasan Berdasarkan :</p>
             <select name="RingkasBerdasarkan" id="Attribut1">
-              <option value="10">Pilih atribut yang akan digunakan:</option>
-              <option value="Year_Birth">Year_Birth</option>
-              <option value="Education">Education</option>
-              <option value="Marital_Status">Marital_Status</option>
-              <option value="Income">Income</option>
-              <option value="Kidhome">Kidhome</option>
-              <option value="Teenhome">Teenhome</option>
-              <option value="Dt_Customer">Dt_Customer</option>
-              <option value="Recency">Recency</option>
-              <option value="MntWines">MntWines</option>
-              <option value="MntFruits">MntFruits</option>
-              <option value="MntMeatProducts">MntMeatProducts</option>
-              <option value="MntFishProducts">MntFishProducts</option>
-              <option value="MntSweetProducts">MntSweetProducts</option>
-              <option value="MntGoldProds">MntGoldProds</option>
-              <option value="NumDealsPurchases">NumDealsPurchases</option>
-              <option value="NumWebPurchases">NumWebPurchases</option>
-              <option value="NumCatalogPurchases">NumCatalogPurchases</option>
-              <option value="NumStorePurchases">NumStorePurchases</option>
-              <option value="NumWebVisitsMonth">NumWebVisitsMonth</option>
-              <option value="AcceptedCmp1">AcceptedCmp1</option>
-              <option value="AcceptedCmp2">AcceptedCmp2</option>
-              <option value="AcceptedCmp3">AcceptedCmp3</option>
-              <option value="AcceptedCmp4">AcceptedCmp4</option>
-              <option value="AcceptedCmp5">AcceptedCmp5</option>
-              <option value="Complain">Complain</option>
-              <option value="Response">Response</option>
+              <option value="10">Attribut 1 - Value 1</option>
+              <option value="15">Attribut 1 - Value 2</option>
+              <!-- Add more options as needed -->
             </select>
           </div>
     
           <div class="dropdowntab">
-            <p>Kelompokan Berdasarkan :</p>
+            <p>Ringkasan Berdasarkan :</p>
             <select name="RingkasBerdasarkan" id="Attribut2">
-              <option value="20">Pilih atribut untuk mengelompokkan:</option>
-              <option value="Education">Education</option>
-              <option value="Marital_Status">Marital_Status</option>
-              <option value="Complain">Complain</option>
-              <option value="Response">Response</option>
+              <option value="20">Attribut 2 - Value 1</option>
+              <option value="25">Attribut 2 - Value 2</option>
+              <!-- Add more options as needed -->
             </select>
           </div>
         </div>
-
-        <button class="CRButton">Create Table</button>
-        <div class="tablemaster">
-          <table class="tablemain">
-            <tr class="tableagr">
-              <th style="width: 300px;">Judul 1</th>
-              <th style="width: 300px;">Judul 2</th>
-            </tr>
-            <tr class="tableagr">
-              <td style="width: 300px;">data 1</td>
-              <td style="width: 300px;">data 2</td>
-            </tr>
-          </table>
+    
+        <div class="chartMater">
+          <div class="LeftChart">
+            <canvas id="barChart" width="300" height="300"></canvas>
+          </div>
+    
+          <div class="RightChart">
+            <canvas id="scatterChart" width="300" height="300"></canvas>
+          </div>
         </div>
+      </div>
+    
+      <script>
+        function updateCharts() {
+          // Get selected attributes from dropdowns
+          const attribut1 = document.getElementById('Attribut1').value;
+          const attribut2 = document.getElementById('Attribut2').value;
+          const jumlahProdukIkan = document.getElementById('LeftChartDropdown').value;
+    
+          // Update LeftChart (Bar Chart)
+          const leftChartCanvas = document.getElementById('barChart').getContext('2d');
+          if (window.myBarChart) {
+            window.myBarChart.destroy();
+          }
+          window.myBarChart = new Chart(leftChartCanvas, {
+            type: 'bar',
+            data: {
+              labels: ['Data'],
+              datasets: [{
+                label: 'Jumlah Produk Ikan',
+                data: [jumlahProdukIkan],
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+    
+          // Update RightChart (Scatter Plot)
+          const rightChartCanvas = document.getElementById('scatterChart').getContext('2d');
+          if (window.myScatterChart) {
+            window.myScatterChart.destroy();
+          }
+          window.myScatterChart = new Chart(rightChartCanvas, {
+            type: 'scatter',
+            data: {
+              datasets: [{
+                label: 'Scatter Plot',
+                data: [{ x: attribut1, y: attribut2 }],
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+              }]
+            },
+            options: {
+              scales: {
+                x: {
+                  type: 'linear',
+                  position: 'bottom',
+                  title: {
+                    display: true,
+                    text: 'Attribut 1'
+                  }
+                },
+                y: {
+                  type: 'linear',
+                  position: 'left',
+                  title: {
+                    display: true,
+                    text: 'Attribut 2'
+                  }
+                }
+              }
+            }
+          });
+        }
+    
+        // Attach the updateCharts function to the change event of the dropdowns
+        document.getElementById('Attribut1').addEventListener('change', updateCharts);
+        document.getElementById('Attribut2').addEventListener('change', updateCharts);
+        document.getElementById('LeftChartDropdown').addEventListener('change', updateCharts);
+    
+        // Initial chart setup
+        updateCharts();
+      </script>
     </body>
 
   </body>
   <!-- plugin for charts  -->
-  <script src="../assets/js/plugins/chartjs.min.js" async></script>
+  <script src="js/plugins/chartjs.min.js" async></script>
   <!-- plugin for scrollbar  -->
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js" async></script>
+  <script src="js/plugins/perfect-scrollbar.min.js" async></script>
   <!-- github button -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- main script file  -->
-  <script src="../assets/js/soft-ui-dashboard-tailwind.js" async></script>
+  <script src="js/soft-ui-dashboard-tailwind.js" async></script>
 </html>
