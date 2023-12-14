@@ -185,18 +185,14 @@
 
       <!-- cards -->
       <div class="w-full px-6 py-6 mx-auto">
-        <!-- row 1 -->
-        <div class="flex flex-wrap -mx-3">
-        
-    </main>
-    <!-- Upload Data -->
-    <body class="bg-gradient-to-br from-cyan-100 to-purple-100 h-screen flex items-center justify-center">
-      <div class="flex flex-col items-center font-poppins drop-shadow-xl bg-white rounded-xl">
+        <!-- Upload Data -->
+        <div class="flex flex-col items-center w-full h-full font-poppins drop-shadow-xl  rounded-xl">
           <div class="flex flex-col items-center">
-              <div class="mt-[80px] text-[25px]">Upload Berkas Data Penjualan dan Pembelian</div>
+              <div class="mt-[80px] text-[25px]">Upload Berkas Nilai</div>
+              <div class="text-[13px] text-gray-500">Transkrip (DPS)</div>
           </div>
           <form method="post" action="/register/upload-nilai" enctype="multipart/form-data">
-              <div class="flex flex-col items-center bg-gray-50 rounded-md drop-shadow-lg w-[340px] h-[290px] mt-[30px]">
+              <div class="flex flex-col items-center bg-gray-50 rounded-md drop-shadow-lg w-[340px] h-[290px] mt-[50px]">
                   <div class="text-[14px] text-gray-500 mt-[15px]">Drop file to upload</div>
                   <hr class="mt-[10px] h-[5px] w-[200px]">
                   <img src="../assets/images/upload_icon.png" class="w-[75px] mt-[10px] border-2 border-gray-300 border-dotted p-[15px]">
@@ -205,15 +201,34 @@
                       Upload File
                   </label> 
                   <p id="selected_file_name" class="mt-2 text-gray-700">No file selected</p>
-                
-                  <p class="mt-[5px] text-[12px] text-gray-500 text-center w-[300px]"></p>
               </div>
-            
+              <div class="flex items-center justify-center mt-[50px] gap-[10px]">
+                <button
+                  type="button"
+                  onclick="submitDataToServer()"
+                  class="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded"
+                >
+                  Submit
+                </button>
+              </div>
 
           </form>
           
       </div>
-  </body>
+        <!-- row 1 -->
+        <div class="flex flex-wrap -mx-3">
+        
+    </main>
+    
+
+
+
+
+
+
+
+
+
 
   </body>
   <!-- plugin for charts  -->
@@ -231,6 +246,32 @@
       const fileName = input.files[0] ? input.files[0].name : "No file selected";
       document.getElementById("selected_file_name").textContent = fileName;
     }
+
+    //Submit Button
+    function submitDataToServer() {
+    const tableData = gatherDataFromTable();
+
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/register/matakuliah'; 
+
+   
+    const dataInput = document.createElement('input');
+    dataInput.type = 'hidden';
+    dataInput.name = 'tableData';
+    dataInput.value = JSON.stringify(tableData);
+
+    
+    form.appendChild(dataInput);
+
+    
+    document.body.appendChild(form);
+
+    
+    form.submit();
+}
+
+
   </script>
 
 </html>
