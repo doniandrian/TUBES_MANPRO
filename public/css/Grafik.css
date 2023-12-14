@@ -228,3 +228,64 @@ button {
     border-radius: 15px; /* Rounded corners for the button */
     cursor: pointer;
 }
+
+.dropdowncat {
+    display: flex;
+}
+
+.dropdowntableft{
+    margin-left: 10%;
+    margin-right: 20%;
+}
+
+.dropdowntab {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-image {
+    width: 200px;
+    height: auto;
+}
+
+.graphimg{
+    display: flex;
+}
+
+.leftgraphimg img{
+    width: 65%;
+    margin-left: 10%;
+    justify-content: center;
+    align-items: center;
+}
+
+.rightgraph img{
+    width: 85%;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropdowntab select{
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.dropdowntableft select{
+    padding: 10px;
+    border-radius: 10px;
+}
+
