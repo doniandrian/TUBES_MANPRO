@@ -25,6 +25,7 @@
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/public/js/chart-1.js"></script>
     <!-- Nucleo Icons -->
     <link href="css/nucleo-icons.css" rel="stylesheet" />
     <link href="css/nucleo-svg.css" rel="stylesheet" />
@@ -118,7 +119,7 @@
                   </g>
                 </svg>
               </div>
-              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Grafik</span>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Meringkas Data</span>
             </a>
           </li>
 
@@ -127,7 +128,7 @@
           </li>
 
           <li class="mt-0.5 w-full">
-            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="../pages/sign-in.html">
+            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="/logout">
               <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                 <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <title>document</title>
@@ -161,9 +162,9 @@
               <li class="leading-normal text-sm">
                 <a class="opacity-50 text-slate-700" href="javascript:;">Pages</a>
               </li>
-              <li class="text-sm pl-2 capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/']" aria-current="page">Grafik</li>
+              <li class="text-sm pl-2 capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/']" aria-current="page">Meringkas Data</li>
             </ol>
-            <h6 class="mb-0 font-bold capitalize">Grafik</h6>
+            <h6 class="mb-0 font-bold capitalize">Meringkas Data</h6>
           </nav>
               <!-- online builder btn  -->
               <!-- <li class="flex items-center">
@@ -192,122 +193,73 @@
       <div class="master">
         <div class="dropdowncat">
           <div class="dropdowntableft">
-            <p>Ringkasan Berdasarkan :</p>
+            <p>Agregat Menggunakan :</p>
             <select name="RingkasBerdasarkan" id="LeftChartDropdown">
-              <option value="">Jumlah Produk Ikan</option>
+              <option value="">Pilih fungsi:</option>
+              <option value="">SUM (Cari nilai jumlah total)</option>
+              <option value="">COUNT (Hitung jumlah data)</option>
+              <option value="">AVG (Hitung rata - rata data)</option>
             </select>
           </div>
     
           <div class="dropdowntab">
-            <p>Ringkasan Berdasarkan :</p>
+            <p>Atribut Target :</p>
             <select name="RingkasBerdasarkan" id="Attribut1">
-              <option value="10">Attribut 1 - Value 1</option>
-              <option value="15">Attribut 1 - Value 2</option>
-              <!-- Add more options as needed -->
+              <option value="10">Pilih atribut yang akan digunakan:</option>
+              <option value="Year_Birth">Year_Birth</option>
+              <option value="Education">Education</option>
+              <option value="Marital_Status">Marital_Status</option>
+              <option value="Income">Income</option>
+              <option value="Kidhome">Kidhome</option>
+              <option value="Teenhome">Teenhome</option>
+              <option value="Dt_Customer">Dt_Customer</option>
+              <option value="Recency">Recency</option>
+              <option value="MntWines">MntWines</option>
+              <option value="MntFruits">MntFruits</option>
+              <option value="MntMeatProducts">MntMeatProducts</option>
+              <option value="MntFishProducts">MntFishProducts</option>
+              <option value="MntSweetProducts">MntSweetProducts</option>
+              <option value="MntGoldProds">MntGoldProds</option>
+              <option value="NumDealsPurchases">NumDealsPurchases</option>
+              <option value="NumWebPurchases">NumWebPurchases</option>
+              <option value="NumCatalogPurchases">NumCatalogPurchases</option>
+              <option value="NumStorePurchases">NumStorePurchases</option>
+              <option value="NumWebVisitsMonth">NumWebVisitsMonth</option>
+              <option value="AcceptedCmp1">AcceptedCmp1</option>
+              <option value="AcceptedCmp2">AcceptedCmp2</option>
+              <option value="AcceptedCmp3">AcceptedCmp3</option>
+              <option value="AcceptedCmp4">AcceptedCmp4</option>
+              <option value="AcceptedCmp5">AcceptedCmp5</option>
+              <option value="Complain">Complain</option>
+              <option value="Response">Response</option>
             </select>
           </div>
     
           <div class="dropdowntab">
-            <p>Ringkasan Berdasarkan :</p>
+            <p>Kelompokan Berdasarkan :</p>
             <select name="RingkasBerdasarkan" id="Attribut2">
-              <option value="20">Attribut 2 - Value 1</option>
-              <option value="25">Attribut 2 - Value 2</option>
-              <!-- Add more options as needed -->
+              <option value="20">Pilih atribut untuk mengelompokkan:</option>
+              <option value="Education">Education</option>
+              <option value="Marital_Status">Marital_Status</option>
+              <option value="Complain">Complain</option>
+              <option value="Response">Response</option>
             </select>
           </div>
         </div>
-    
-        <div class="chartMater">
-          <div class="LeftChart">
-            <canvas id="barChart" width="300" height="300"></canvas>
-          </div>
-    
-          <div class="RightChart">
-            <canvas id="scatterChart" width="300" height="300"></canvas>
-          </div>
+
+        <button class="CRButton">Create Table</button>
+        <div class="tablemaster">
+          <table class="tablemain">
+            <tr class="tableagr">
+              <th style="width: 300px;">Judul 1</th>
+              <th style="width: 300px;">Judul 2</th>
+            </tr>
+            <tr class="tableagr">
+              <td style="width: 300px;">data 1</td>
+              <td style="width: 300px;">data 2</td>
+            </tr>
+          </table>
         </div>
-      </div>
-    
-      <script>
-        function updateCharts() {
-          // Get selected attributes from dropdowns
-          const attribut1 = document.getElementById('Attribut1').value;
-          const attribut2 = document.getElementById('Attribut2').value;
-          const jumlahProdukIkan = document.getElementById('LeftChartDropdown').value;
-    
-          // Update LeftChart (Bar Chart)
-          const leftChartCanvas = document.getElementById('barChart').getContext('2d');
-          if (window.myBarChart) {
-            window.myBarChart.destroy();
-          }
-          window.myBarChart = new Chart(leftChartCanvas, {
-            type: 'bar',
-            data: {
-              labels: ['Data'],
-              datasets: [{
-                label: 'Jumlah Produk Ikan',
-                data: [jumlahProdukIkan],
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-              }]
-            },
-            options: {
-              scales: {
-                y: {
-                  beginAtZero: true
-                }
-              }
-            }
-          });
-    
-          // Update RightChart (Scatter Plot)
-          const rightChartCanvas = document.getElementById('scatterChart').getContext('2d');
-          if (window.myScatterChart) {
-            window.myScatterChart.destroy();
-          }
-          window.myScatterChart = new Chart(rightChartCanvas, {
-            type: 'scatter',
-            data: {
-              datasets: [{
-                label: 'Scatter Plot',
-                data: [{ x: attribut1, y: attribut2 }],
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-              }]
-            },
-            options: {
-              scales: {
-                x: {
-                  type: 'linear',
-                  position: 'bottom',
-                  title: {
-                    display: true,
-                    text: 'Attribut 1'
-                  }
-                },
-                y: {
-                  type: 'linear',
-                  position: 'left',
-                  title: {
-                    display: true,
-                    text: 'Attribut 2'
-                  }
-                }
-              }
-            }
-          });
-        }
-    
-        // Attach the updateCharts function to the change event of the dropdowns
-        document.getElementById('Attribut1').addEventListener('change', updateCharts);
-        document.getElementById('Attribut2').addEventListener('change', updateCharts);
-        document.getElementById('LeftChartDropdown').addEventListener('change', updateCharts);
-    
-        // Initial chart setup
-        updateCharts();
-      </script>
     </body>
 
   </body>

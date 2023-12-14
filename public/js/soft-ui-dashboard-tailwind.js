@@ -17,45 +17,45 @@
 */
 var page = window.location.pathname.split("/").pop().split(".")[0];
 var aux = window.location.pathname.split("/");
-var to_build = (aux.includes('pages')?'../':'./');
+var to_build = (aux.includes('views')?'../':'./');
 var root = window.location.pathname.split("/")
-if (!aux.includes("pages")) {
-  page = "dashboard";
+if (!aux.includes("views")) {
+  page = "Dashboard";
 }
 
-loadStylesheet(to_build + "assets/css/perfect-scrollbar.css");
-loadJS(to_build + "assets/js/perfect-scrollbar.js", true);
+loadStylesheet(to_build + "public/css/perfect-scrollbar.css");
+loadJS(to_build + "public/js/perfect-scrollbar.js", true);
 
 if (document.querySelector("nav [navbar-trigger]")) {
-  loadJS(to_build + "assets/js/navbar-collapse.js", true);
+  loadJS(to_build + "public/js/navbar-collapse.js", true);
 }
 
 if (document.querySelector("[data-target='tooltip']")) {
-  loadJS(to_build + "assets/js/tooltips.js", true);
-  loadStylesheet(to_build + "assets/css/tooltips.css");
+  loadJS(to_build + "public/js/tooltips.js", true);
+  loadStylesheet(to_build + "public/css/tooltips.css");
 }
 
 if (document.querySelector("[nav-pills]")) {
-  loadJS(to_build + "assets/js/nav-pills.js", true);
+  loadJS(to_build + "public/js/nav-pills.js", true);
 }
 
 if (document.querySelector("[dropdown-trigger]")) {
-  loadJS(to_build + "assets/js/dropdown.js", true);
+  loadJS(to_build + "public/js/dropdown.js", true);
 
 }
 
 if (document.querySelector("[fixed-plugin]")) {
-  loadJS(to_build + "assets/js/fixed-plugin.js", true);
+  loadJS(to_build + "public/js/fixed-plugin.js", true);
 }
 
 if (document.querySelector("[navbar-main]")) {
-  loadJS(to_build + "assets/js/sidenav-burger.js", true);
-  loadJS(to_build + "assets/js/navbar-sticky.js", true);
+  loadJS(to_build + "public/js/sidenav-burger.js", true);
+  loadJS(to_build + "public/js/navbar-sticky.js", true);
 }
 
 if (document.querySelector("canvas")) {
-  loadJS(to_build + "assets/js/chart-1.js", true);
-  loadJS(to_build + "assets/js/chart-2.js", true);
+  loadJS(to_build + "public/js/chart-1.js", true);
+  loadJS(to_build + "public/js/chart-2.js", true);
 }
 
 function loadJS(FILE_URL, async) {
