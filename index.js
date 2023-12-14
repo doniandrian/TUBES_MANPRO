@@ -6,6 +6,8 @@ import session from "express-session";
 import path from "path";
 import crypto from "crypto";
 import multer from "multer";
+import fs from "fs";
+import csv from "fast-csv";
 
 const app = express();
 const staticPath = path.resolve("public");
@@ -142,7 +144,66 @@ app.get("/upload", (req, res) => {
 app.post("/upload", upload.single("file"), (req, res) => {
   console.log(req.file);
   console.log(req.file.path);
+  const __dirname = './data_csv'
+  readCSVFile(__dirname + "/" + req.file.filename);
 });
+
+function readCSVFile(path) {
+  let stream = fs.createReadStream(path);
+  let csvData = [];
+  let filestream = csv
+  .parse()
+  .on('data', function(data) {
+      csvData.push(data);
+  })
+  .on('end', function() {
+      csvData.shift();
+      console.log(csvData);
+      const query1 = "INSERT INTO People (`ID`,`Year_Birth`,`Education`,`Marital_Status`,`Income`,`Kidhome`,`Teenhome`,`Dt_Customer`,`Recency`,`Complain`) VALUES(?,?,?,?,?,?,?,?,?,?);";
+      const query2 = "INSERT INTO products (`ID`,`MntWines`,`MntFruits`,`MntMeatProducts`,`MntFishProducts`,`MntSweetProducts`,`MntGoldProds`) VALUES (?, ?, ?, ?, ?, ?, ?);";
+      const query3 = "INSERT INTO promotion(`ID`,`NumDealsPurchases`,`AcceptedCmp3`,`AcceptedCmp4`,`AcceptedCmp5`,`AcceptedCmp1`,`AcceptedCmp2`,`Response`) VALUES ('?', ?, ?, ?, ?, ?, ?, ?);";
+      const query4 = "INSERT INTO place(`ID`,`NumWebPurchases`,`NumCatalogPurchases`,`NumStorePurchases`,`NumWebVisitsMonth`) VALUES(? , ?, ?, ?, ?);";
+
+      for (let i = 0; i < csvData.length; i++) {
+        let data = csvData[i];
+        db.query(query1, [data[0], data[1], data[2], data[3], data[4], data[5], data[6],data[7],data[8],data[9],req.file.path], (err, result) => {
+          if (err) {
+            console.error("Database error:", err);
+          } else {
+            console.log(result);
+          }
+        });
+        db.query(query2, [data[0], data[10], data[11], data[12], data[13], data[14], data[15]], (err, result) => {
+          if (err) {
+            console.error("Database error:", err);
+          } else {
+            console.log(result);
+          }
+        });
+        db.query(query3, [data[0], data[16], data[17], data[18], data[19], data[20], data[21], data[22]], (err, result) => {
+          if (err) {
+            console.error("Database error:", err);
+          } else {
+            console.log(result);
+          }
+        });
+        db.query(query4, [data[0], data[23], data[24], data[25], data[26]], (err, result) => {
+          if (err) {
+            console.error("Database error:", err);
+          } else {
+            console.log(result);
+          }
+        });
+      }
+
+
+      fs.unlinkSync(path);
+  });
+
+  stream.pipe(filestream);
+
+
+} 
 
 //route grafik
 app.get("/grafik", (req, res) => {
