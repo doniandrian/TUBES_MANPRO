@@ -1,0 +1,291 @@
+/* dashboard */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+html, body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+html{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background-color: #000000;
+}
+
+.lefttab{
+    width: 14%;
+    height: 100%;
+    background-color: white;
+}
+
+.righttab{
+    width: 86%;
+    height: 100%;
+    background-color: white;
+}
+
+.topbar{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 35%;
+    background-color: #1e293b;
+    color: white;
+}
+
+.topbarsqr{
+    display: flex;
+    flex-direction: column;
+    width: 22%;
+    height: 36%;
+    background-color: white;
+    border-radius: 5px;
+    margin: 8px;
+}
+
+.titlerighttop
+{
+    margin-left: -90%;
+    margin-top: 1%;
+    height: 10%;
+}
+
+.iconrighttop
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 90%;
+}
+
+.titletbs
+{
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+    margin-left: 4%;
+    color: rgb(97, 96, 96);
+}
+
+.titletbs p{
+    justify-content: center;
+    align-items: center;
+    margin-left: 10%;
+    font-size: 23px;
+    margin-bottom: 5%;
+    color: #000000;
+    font-weight: bolder;
+}
+
+.titletbs img {
+    width: 20%;
+    height: auto;
+}
+
+.valuetbs
+{
+    color: black;
+}
+
+/* NAVBAR */
+.lttitle{
+    margin-bottom: 20%;
+    margin-top: 10%;
+    margin-left: 5%;
+    font-weight: bolder;
+}
+
+.ltsubtitle{
+    font-weight: bold;
+    margin-bottom: 20%;
+    margin-top: 10%;
+    margin-left: 5%;
+    color: rgb(107, 104, 104);
+}
+
+.ltsubtitle ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.ltsubtitle ul li a {
+    margin-left: 10px;
+}
+/* END OF NAVBAR */
+
+.lefttab li {
+    margin-bottom: 10px;
+}
+
+.graphbar{
+    width: 100%;
+    height: 65%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.graph {
+    width: 62.5%;
+    background-color: #1e293b;
+    height: 65%;
+}
+
+.graphdata{
+    margin: 5%;
+    width :25%;
+    height : 40%
+}
+
+.titletbs img {
+    width: 100%; 
+    height: auto;
+}
+
+
+.graphbar {
+    width: 100%;
+    height: 65%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.graph {
+    width: 62.5%;
+    height: 65%;
+    background-image: url('/public/images/numofvis2.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 55%;
+    background-color: #cdcbcb; /* Slightly grey background */
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-top: -6%;
+    padding: 20px;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.upload-section h2 {
+    font-size: 24px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+.dropfile-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="file"] {
+    width: 80%;
+    padding: 15px; /* Added padding to make it thicker */
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 2px solid #de167a; /* Pink color */
+    border-radius: 8px; /* Rounded corners for the input */
+}
+
+label {
+    font-size: 16px;
+    color: #000000; /* Changed text color to black */
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #de167a; /* Pink color */
+    color: #fff;
+    padding: 3%;
+    font-weight: bold;
+    font-size: 15px;
+    border: none;
+    border-radius: 15px; /* Rounded corners for the button */
+    cursor: pointer;
+}
+
+.dropdowncat {
+    display: flex;
+}
+
+.dropdowntableft{
+    margin-left: 10%;
+    margin-right: 20%;
+}
+
+.dropdowntab {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-image {
+    width: 200px;
+    height: auto;
+}
+
+.graphimg{
+    display: flex;
+}
+
+.leftgraphimg img{
+    width: 65%;
+    margin-left: 10%;
+    justify-content: center;
+    align-items: center;
+}
+
+.rightgraph img{
+    width: 85%;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropdowntab select{
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.dropdowntableft select{
+    padding: 10px;
+    border-radius: 10px;
+}
+
