@@ -38,7 +38,7 @@ db.connect((err) => {
 
 //route login
 app.get("/login", (req, res) => {
-  res.render("login");
+  res.render("Login");
 });
 
 app.post("/login", (req, res) => {
@@ -47,22 +47,26 @@ app.post("/login", (req, res) => {
 
   if (username && password) {
     db.query(
-      "SELECT * FROM user WHERE username = ? AND password = ?",
+      "SELECT * FROM users WHERE username = ? AND pass = ?;",
       [username, password],
       (err, result) => {
-        if (result.length > 0) {
-          req.session.loggedin = true;
-          req.session.username = username;
-          res.redirect("/dashboard");
+        if (err) {
+          console.error("Database error:", err);
+          res.redirect("/login");
         } else {
-          //kembali ke login dan tampilkan pesan error username/password salah
-          res.redirect("/login", {
-            error: "Username atau password salah",
-          });
+          console.log(result);
+          if (result.length > 0) {
+            req.session.loggedin = true;
+            req.session.username = username;
+            res.redirect("/dashboard");
+          } else {
+            res.redirect("/login?error=Username atau password salah");
+          }
         }
-        res.end();
       }
     );
+  } else {
+    res.redirect("/login?error=Username atau password tidak valid");
   }
 });
 
@@ -70,14 +74,51 @@ app.post("/login", (req, res) => {
 app.get("/dashboard", (req, res) => {
   if (req.session.loggedin) {
     //lanjutin querynya
-    const query1 = todo(); //query banyaknya customer
-    const query2 = todo(); //query banyaknya complains
-    const query3 = todo(); //query banyaknya purchases
-    const query4 = todo(); //query banyaknya web visit per month
-    
-    res.render("dashboard", {
-      username: req.session.username,
+    const query1 = "SELECT COUNT(`ID`) AS 'customer' FROM people;"; //query banyaknya customer
+    const query2 = "SELECT SUM(`Complain`) AS 'complain' FROM people;"; //query banyaknya complains
+    const query3 =
+      "SELECT SUM(`NumWebPurchases`) AS 'Web Purchases', SUM(`NumCatalogPurchases`) AS 'Catalog Purchases', SUM(`NumStorePurchases`) AS 'Store Purchases' FROM place;"; //query banyaknya purchases
+    const query4 = "SELECT SUM(`NumWebVisitsMonth`) AS 'Jvisit' FROM place;"; //query banyaknya web visit per month
+
+    db.query(query1, (err, result) => {
+      if (err) {
+        console.error("Database error:", err);
+      } else {
+        console.log(result);
+        db.query(query2, (err, result2) => {
+          if (err) {
+            console.error("Database error:", err);
+          } else {
+            console.log(result2);
+            db.query(query3, (err, result3) => {
+              if (err) {
+                console.error("Database error:", err);
+              } else {
+                console.log(result3);
+                db.query(query4, (err, result4) => {
+                  if (err) {
+                    console.error("Database error:", err);
+                  } else {
+                    console.log(result4);
+                    res.render("Dashboard", {
+                      customer: result[0].customer,
+                      complain: result2[0].complain,
+                      purchase:
+                        result3[0]["Web Purchases"] +
+                        result3[0]["Catalog Purchases"] +
+                        result3[0]["Store Purchases"],
+                      visit: result4[0].Jvisit,
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
     });
+  } else {
+    res.redirect("/login");
   }
 });
 
@@ -94,13 +135,18 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 //route upload
-app.get("/dashboard/upload", (req, res) => {
-  res.render("upload");
+app.get("/upload", (req, res) => {
+  res.render("UploadData");
+});
+
+app.post("/upload", upload.single("file"), (req, res) => {
+  console.log(req.file);
+  console.log(req.file.path);
 });
 
 //route grafik
-app.get("/dashboard/grafik", (req, res) => {
-  res.render("grafik");
+app.get("/grafik", (req, res) => {
+  res.render("Grafik");
 });
 
 //logout
