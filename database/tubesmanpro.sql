@@ -33,93 +33,68 @@ DELETE FROM `info`;
 -- Dumping structure for table tubesmanpro.people
 DROP TABLE IF EXISTS `people`;
 CREATE TABLE IF NOT EXISTS `people` (
-  `ID` varchar(5) COLLATE ucs2_bin NOT NULL,
-  `Year_Birth` int NOT NULL,
-  `Education` varchar(20) COLLATE ucs2_bin NOT NULL,
-  `Marital_Status` varchar(10) COLLATE ucs2_bin NOT NULL,
+  `ID` varchar(20) COLLATE ucs2_bin NOT NULL,
+  `Year_Birth` int DEFAULT NULL,
+  `Education` varchar(20) COLLATE ucs2_bin DEFAULT NULL,
+  `Marital_Status` varchar(10) COLLATE ucs2_bin DEFAULT NULL,
   `Income` int DEFAULT NULL,
-  `Kidhome` int NOT NULL,
-  `Teenhome` int NOT NULL,
-  `Dt_Customer` date NOT NULL,
-  `Recency` int NOT NULL,
-  `Complain` int NOT NULL,
-  `file_` varchar(150) COLLATE ucs2_bin NOT NULL,
+  `Kidhome` int DEFAULT NULL,
+  `Teenhome` int DEFAULT NULL,
+  `Dt_Customer` date DEFAULT NULL,
+  `Recency` int DEFAULT NULL,
+  `Complain` int DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ucs2 COLLATE=ucs2_bin;
 
--- Dumping data for table tubesmanpro.people: ~5 rows (approximately)
+-- Dumping data for table tubesmanpro.people: ~0 rows (approximately)
 DELETE FROM `people`;
-INSERT INTO `people` (`ID`, `Year_Birth`, `Education`, `Marital_Status`, `Income`, `Kidhome`, `Teenhome`, `Dt_Customer`, `Recency`, `Complain`, `file_`) VALUES
-	('2174', 1954, 'Graduation', 'Single', 46344, 1, 1, '2014-03-08', 38, 0, 'marketing_campaign.csv'),
-	('4141', 1965, 'Graduation', 'Together', 71613, 0, 0, '2013-08-21', 26, 0, 'marketing_campaign.csv'),
-	('5324', 1981, 'PhD', 'Married', 58923, 1, 0, '2014-01-19', 94, 0, 'marketing_campaign.csv'),
-	('5524', 1957, 'Graduation', 'Single', 58138, 0, 0, '2012-09-04', 58, 0, 'marketing_campaign.csv'),
-	('6182', 1984, 'Graduation', 'Together', 26646, 1, 0, '2014-02-10', 26, 0, 'marketing_campaign.csv');
 
 -- Dumping structure for table tubesmanpro.place
 DROP TABLE IF EXISTS `place`;
 CREATE TABLE IF NOT EXISTS `place` (
   `ID` varchar(5) COLLATE ucs2_bin NOT NULL,
-  `NumWebPurchases` int NOT NULL,
-  `NumCatalogPurchases` int NOT NULL,
-  `NumStorePurchases` int NOT NULL,
-  `NumWebVisitsMonth` int NOT NULL,
+  `NumWebPurchases` int DEFAULT NULL,
+  `NumCatalogPurchases` int DEFAULT NULL,
+  `NumStorePurchases` int DEFAULT NULL,
+  `NumWebVisitsMonth` int DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ucs2 COLLATE=ucs2_bin;
 
--- Dumping data for table tubesmanpro.place: ~5 rows (approximately)
+-- Dumping data for table tubesmanpro.place: ~0 rows (approximately)
 DELETE FROM `place`;
-INSERT INTO `place` (`ID`, `NumWebPurchases`, `NumCatalogPurchases`, `NumStorePurchases`, `NumWebVisitsMonth`) VALUES
-	('2174', 1, 1, 2, 5),
-	('4141', 8, 2, 10, 4),
-	('5324', 5, 3, 6, 5),
-	('5524', 8, 10, 4, 7),
-	('6182', 2, 0, 4, 6);
 
 -- Dumping structure for table tubesmanpro.products
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE IF NOT EXISTS `products` (
   `ID` varchar(5) COLLATE ucs2_bin NOT NULL,
-  `MntWines` int NOT NULL,
-  `MntFruits` int NOT NULL,
-  `MntMeatProducts` int NOT NULL,
-  `MntFishProducts` int NOT NULL,
-  `MntSweetProducts` int NOT NULL,
-  `MntGoldProds` int NOT NULL,
+  `MntWines` int DEFAULT NULL,
+  `MntFruits` int DEFAULT NULL,
+  `MntMeatProducts` int DEFAULT NULL,
+  `MntFishProducts` int DEFAULT NULL,
+  `MntSweetProducts` int DEFAULT NULL,
+  `MntGoldProds` int DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ucs2 COLLATE=ucs2_bin;
 
--- Dumping data for table tubesmanpro.products: ~5 rows (approximately)
+-- Dumping data for table tubesmanpro.products: ~0 rows (approximately)
 DELETE FROM `products`;
-INSERT INTO `products` (`ID`, `MntWines`, `MntFruits`, `MntMeatProducts`, `MntFishProducts`, `MntSweetProducts`, `MntGoldProds`) VALUES
-	('2174', 11, 1, 6, 2, 1, 6),
-	('4141', 426, 49, 127, 111, 21, 42),
-	('5324', 173, 43, 118, 46, 27, 15),
-	('5524', 635, 88, 546, 172, 88, 88),
-	('6182', 11, 4, 20, 10, 3, 5);
 
 -- Dumping structure for table tubesmanpro.promotion
 DROP TABLE IF EXISTS `promotion`;
 CREATE TABLE IF NOT EXISTS `promotion` (
   `ID` varchar(5) COLLATE ucs2_bin NOT NULL,
-  `NumDealsPurchases` int NOT NULL,
-  `AcceptedCmp1` int NOT NULL,
-  `AcceptedCmp2` int NOT NULL,
-  `AcceptedCmp3` int NOT NULL,
-  `AcceptedCmp4` int NOT NULL,
-  `AcceptedCmp5` int NOT NULL,
-  `Response` int NOT NULL,
+  `NumDealsPurchases` int DEFAULT NULL,
+  `AcceptedCmp1` int DEFAULT NULL,
+  `AcceptedCmp2` int DEFAULT NULL,
+  `AcceptedCmp3` int DEFAULT NULL,
+  `AcceptedCmp4` int DEFAULT NULL,
+  `AcceptedCmp5` int DEFAULT NULL,
+  `Response` int DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ucs2 COLLATE=ucs2_bin;
 
--- Dumping data for table tubesmanpro.promotion: ~5 rows (approximately)
+-- Dumping data for table tubesmanpro.promotion: ~0 rows (approximately)
 DELETE FROM `promotion`;
-INSERT INTO `promotion` (`ID`, `NumDealsPurchases`, `AcceptedCmp1`, `AcceptedCmp2`, `AcceptedCmp3`, `AcceptedCmp4`, `AcceptedCmp5`, `Response`) VALUES
-	('2174', 2, 0, 0, 0, 0, 0, 0),
-	('4141', 1, 0, 0, 0, 0, 0, 0),
-	('5324', 5, 0, 0, 0, 0, 0, 0),
-	('5524', 3, 0, 0, 0, 0, 0, 1),
-	('6182', 2, 0, 0, 0, 0, 0, 0);
 
 -- Dumping structure for table tubesmanpro.users
 DROP TABLE IF EXISTS `users`;

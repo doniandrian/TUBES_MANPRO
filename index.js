@@ -6,6 +6,8 @@ import session from "express-session";
 import path from "path";
 import crypto from "crypto";
 import multer from "multer";
+import fs from "fs";
+import csv from "fast-csv";
 
 const app = express();
 const staticPath = path.resolve("public");
@@ -142,8 +144,87 @@ app.get("/upload", (req, res) => {
 app.post("/upload", upload.single("file"), (req, res) => {
   console.log(req.file);
   console.log(req.file.path);
+  const __dirname = './data_csv'
+  readCSVFile(__dirname + "/" + req.file.filename);
+  res.redirect("/upload");
 });
 
+async function readCSVFile(path) {
+  try {
+    const stream = fs.createReadStream(path);
+    const csvData = await new Promise((resolve, reject) => {
+      const data = [];
+      const filestream = csv
+        .parse({ delimiter: ';' })
+        .on('data', (row) => data.push(row))
+        .on('end', () => resolve(data))
+        .on('error', (error) => reject(error));
+
+      stream.pipe(filestream);
+    });
+
+    csvData.shift(); // Remove the header
+
+    const query1 =
+      "INSERT INTO People (`ID`,`Year_Birth`,`Education`,`Marital_Status`,`Income`,`Kidhome`,`Teenhome`,`Dt_Customer`,`Recency`,`Complain`) VALUES (?,?,?,?,?,?,?,?,?,?);";
+
+    const query2 =
+      "INSERT INTO products (`ID`,`MntWines`,`MntFruits`,`MntMeatProducts`,`MntFishProducts`,`MntSweetProducts`,`MntGoldProds`) VALUES (?, ?, ?, ?, ?, ?, ?);";
+
+    const query3 =
+      "INSERT INTO promotion (`ID`,`NumDealsPurchases`,`AcceptedCmp3`,`AcceptedCmp4`,`AcceptedCmp5`,`AcceptedCmp1`,`AcceptedCmp2`,`Response`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+
+    const query4 =
+      "INSERT INTO place (`ID`,`NumWebPurchases`,`NumCatalogPurchases`,`NumStorePurchases`,`NumWebVisitsMonth`) VALUES (?, ?, ?, ?, ?);";
+
+    for (let i = 0; i < csvData.length; i++) {
+      const data = csvData[i];
+      console.log(data);
+
+      //skip row if there are empty values
+      if (data.includes("")) {
+        continue;
+      }
+
+
+      await executeQuery(query1, [
+        data[0], data[1], data[2], data[3], data[4],
+        data[5], data[6], data[7], data[8], data[25]
+      ]);
+
+      await executeQuery(query2, [
+        data[0], data[9], data[10], data[11],
+        data[12], data[13], data[14]
+      ]);
+
+      await executeQuery(query3, [
+        data[0], data[15], data[20], data[21],
+        data[22], data[23], data[24], data[28]
+      ]);
+
+      await executeQuery(query4, [
+        data[0], data[16], data[17], data[18], data[19]
+      ]);
+    }
+
+    fs.unlinkSync(path); // Remove the CSV file after processing
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+// Helper function to execute a database query and return a promise
+function executeQuery(query, values) {
+  return new Promise((resolve, reject) => {
+    db.query(query, values, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+}
 //route grafik
 app.get("/grafik", (req, res) => {
   res.render("Grafik");
