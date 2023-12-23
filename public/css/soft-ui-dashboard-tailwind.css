@@ -4277,9 +4277,9 @@ canvas {
 }
 
 .CRButton{
-  padding: 20px;
-  background-color: plum;
-  border-radius: 20px;
+  padding: 15px;
+  background-color: greenyellow;
+  border-radius: 10px;
   margin-bottom: 5%;
   color:#464646;
 }
