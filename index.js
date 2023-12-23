@@ -230,6 +230,46 @@ app.get("/grafik", (req, res) => {
   res.render("Grafik");
 });
 
+//route table
+app.get("/get-data-tabel/:agregat/:atributtarget/:kelompok", (req, res) => {
+  const agregat = req.params.agregat;
+  const atributtarget = req.params.atributtarget;
+  const kelompok = req.params.kelompok;
+  let query = ``;
+  if(agregat == "SUM"){
+    query = `SELECT ${kelompok}, sum(${atributtarget})
+    FROM people 
+    inner join products ON people.ID = products.ID
+    inner join promotion ON people.ID = promotion.ID
+    inner join place ON people.ID = place.ID
+    GROUP BY ${kelompok};`;
+  }else if(agregat == "COUNT"){
+    query = `SELECT ${kelompok}, count(${atributtarget})
+    FROM people 
+    inner join products ON people.ID = products.ID
+    inner join promotion ON people.ID = promotion.ID
+    inner join place ON people.ID = place.ID
+    GROUP BY ${kelompok};`;
+  }else if (agregat == "AVG"){
+    query = `SELECT ${kelompok}, avg(${atributtarget})
+    FROM people 
+    inner join products ON people.ID = products.ID
+    inner join promotion ON people.ID = promotion.ID
+    inner join place ON people.ID = place.ID
+    GROUP BY ${kelompok};`;
+
+  }
+
+  db.query(query, (err, result) => {
+    if (err) {
+      console.error("Database error:", err);
+    } else {
+      console.log(result);
+      res.json(result);
+    }
+  });
+});
+
 //logout
 app.post("/logout", (req, res) => {
   req.session.destroy();

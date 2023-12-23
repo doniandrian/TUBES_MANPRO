@@ -196,9 +196,9 @@
             <p>Agregat Menggunakan :</p>
             <select name="RingkasBerdasarkan" id="LeftChartDropdown">
               <option value="">Pilih fungsi:</option>
-              <option value="">SUM (Cari nilai jumlah total)</option>
-              <option value="">COUNT (Hitung jumlah data)</option>
-              <option value="">AVG (Hitung rata - rata data)</option>
+              <option value="SUM">SUM (Cari nilai jumlah total)</option>
+              <option value="COUNT">COUNT (Hitung jumlah data)</option>
+              <option value="AVG">AVG (Hitung rata - rata data)</option>
             </select>
           </div>
     
@@ -247,39 +247,21 @@
           </div>
         </div>
 
-        <button class="CRButton">Confirm</button>
+        <button class="CRButton" id="confirmbtn" onclick="submitclick()">Confirm</button>
         <div class="container">
 	
-          <div class="table">
+          <div class="table" id="table">
             <div class="table-header">
-              <div class="header__item"><a id="name" class="filter__link" href="#">Name</a></div>
-              <div class="header__item"><a id="wins" class="filter__link filter__link--number" href="#">Wins</a></div>
-              <div class="header__item"><a id="draws" class="filter__link filter__link--number" href="#">Draws</a></div>
-              <div class="header__item"><a id="losses" class="filter__link filter__link--number" href="#">Losses</a></div>
-              <div class="header__item"><a id="total" class="filter__link filter__link--number" href="#">Total</a></div>
+              <div id="nameHeader" class="header__item"><a id="name" class="filter__link" >Atribut Target</a></div>
+              <div id="winsHeader" class="header__item"><a id="wins" class="filter__link filter__link--number" >Agregat</a></div>
+
+              
             </div>
-            <div class="table-content">	
+            <div class="table-content" id="table-content">	
               <div class="table-row">		
-                <div class="table-data">Tom</div>
-                <div class="table-data">2</div>
-                <div class="table-data">0</div>
-                <div class="table-data">1</div>
-                <div class="table-data">5</div>
+                
               </div>
-              <div class="table-row">
-                <div class="table-data">Dick</div>
-                <div class="table-data">1</div>
-                <div class="table-data">1</div>
-                <div class="table-data">2</div>
-                <div class="table-data">3</div>
-              </div>
-              <div class="table-row">
-                <div class="table-data">Harry</div>
-                <div class="table-data">0</div>
-                <div class="table-data">2</div>
-                <div class="table-data">2</div>
-                <div class="table-data">2</div>
-              </div>
+              
             </div>	
           </div>
         </div>
@@ -295,6 +277,86 @@
   <!-- main script file  -->
   <script src="js/soft-ui-dashboard-tailwind.js" async></script>
 </html>
+
+<script>
+  
+  function submitclick(){
+    const agregat = document.getElementById('LeftChartDropdown').value;
+    const atributtarget = document.getElementById('Attribut1').value;
+    const kelompok = document.getElementById('Attribut2').value;
+
+    console.log(agregat);
+    console.log(atributtarget);
+    console.log(kelompok);
+
+    //fetch data from server
+
+    fetchdata(agregat,atributtarget,kelompok).then((data) =>{
+      updateTable(data);
+    });
+    
+
+    
+  }
+  function fetchdata(agregat,atributtarget,kelompok) {
+      
+      return fetch(`/get-data-tabel/${agregat}/${atributtarget}/${kelompok}`)
+        .then((response) => response.json())
+        .then((data) => {
+          return data;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  
+  function updateTable(data){
+    const table = document.getElementById('table');
+    const tableContent = document.querySelector('.table-content');
+  
+    tableContent.innerHTML = '';
+    
+    data.forEach(row => {
+        row = Object.values(row);
+        const tableRow = document.createElement('div');
+        tableRow.classList.add('table-row');
+
+        const nameCell = document.createElement('div');
+        nameCell.classList.add('table-data');
+        nameCell.textContent = row[0];
+
+        const winsCell = document.createElement('div');
+        winsCell.classList.add('table-data');
+        winsCell.textContent = row[1];
+
+        tableRow.appendChild(nameCell);
+        tableRow.appendChild(winsCell);
+
+        tableContent.appendChild(tableRow);
+
+      });
+      updateHeader();
+
+  }
+
+  function updateHeader() {
+  const nameHeader = document.getElementById('nameHeader');
+  const winsHeader = document.getElementById('winsHeader');
+
+  const agregat = document.getElementById('LeftChartDropdown').value;
+  const kelompok = document.getElementById('Attribut2').value;
+
+  // Get the selected attributes (replace these with your actual logic)
+  const selectedNameAttribute = document.getElementById('Attribut1').value;
+  const selectedWinsAttribute = document.getElementById('LeftChartDropdown').value;
+
+  // Update the header text based on selected attributes
+  nameHeader.querySelector('a').textContent = selectedNameAttribute;
+  winsHeader.querySelector('a').textContent = selectedWinsAttribute;
+}
+
+
+</script>
 
 
 <style>
