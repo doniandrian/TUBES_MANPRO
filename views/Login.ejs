@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" type="text/css" href="/public/css/Styles.css">
+    <link rel="stylesheet" type="text/css" href="css/Styles.css">
     <style>
         .description h1, .titledesc {
             transition: opacity 0.5s ease-out;
@@ -16,8 +16,8 @@
     <div class="container">
         <h2><Center>Retail Kita</Center></h2>
         <h4><center>Sign in with credentials</center></h4>
-        <form>
-            <label for="username">Email:</label>
+        <form method="post" action="/login">
+            <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
 
             <label for="password">Password:</label>

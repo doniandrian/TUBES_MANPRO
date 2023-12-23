@@ -1,5 +1,5 @@
 var pageName = page;
-var sidenav_target = to_build + "pages/" + pageName + ".html";
+var sidenav_target = to_build + "views/" + pageName + ".ejs";
 
 var fixedPlugin = document.querySelector("[fixed-plugin]");
 var fixedPluginButton = document.querySelector("[fixed-plugin-button]");
