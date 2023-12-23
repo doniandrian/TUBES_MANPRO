@@ -102,6 +102,9 @@ app.get("/dashboard", (req, res) => {
                     console.error("Database error:", err);
                   } else {
                     console.log(result4);
+                    if(result2[0].complain === 0){
+                      result2[0].complain = 0
+                    }
                     res.render("Dashboard", {
                       customer: result[0].customer,
                       complain: result2[0].complain,
