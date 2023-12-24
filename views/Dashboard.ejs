@@ -270,16 +270,17 @@
           </div>
         </div>
 
-        <!-- card3 -->
-        <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
-          <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
-            <div class="flex-auto p-4">
-              <div class="flex flex-row -mx-3">
-                <div class="flex-none w-2/3 max-w-full px-3">
-                  <div>
-                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Complaints</p>
-                    <h5 class="mb-0 font-bold">
-                      <%= complain %>
+          <!-- card3 -->
+          <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+            <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
+              <div class="flex-auto p-4">
+                <div class="flex flex-row -mx-3">
+                  <div class="flex-none w-2/3 max-w-full px-3">
+                    <div>
+                      <p class="mb-0 font-sans font-semibold leading-normal text-sm">Complaints</p>
+                      <h5 class="mb-0 font-bold">
+                        <% if(complain == null) complain=0 %>
+                        <%= complain %>
                         <span class="leading-normal text-red-600 text-sm font-weight-bolder"></span>
                     </h5>
                   </div>
@@ -295,16 +296,17 @@
           </div>
         </div>
 
-        <!-- card4 -->
-        <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
-          <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
-            <div class="flex-auto p-4">
-              <div class="flex flex-row -mx-3">
-                <div class="flex-none w-2/3 max-w-full px-3">
-                  <div>
-                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Visit Per Month</p>
-                    <h5 class="mb-0 font-bold">
-                      <%= visit %>
+          <!-- card4 -->
+          <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
+            <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
+              <div class="flex-auto p-4">
+                <div class="flex flex-row -mx-3">
+                  <div class="flex-none w-2/3 max-w-full px-3">
+                    <div>
+                      <p class="mb-0 font-sans font-semibold leading-normal text-sm">Visit Per Month</p>
+                      <h5 class="mb-0 font-bold">
+                        <% if(visit == null) visit=0 %>
+                        <%= visit %>
                         <span class="leading-normal text-sm font-weight-bolder text-lime-500"></span>
                     </h5>
                   </div>
@@ -331,76 +333,7 @@
             <option value="cmp">Accepted Campaigns</option>
           </select>
           <!-- Your JavaScript Code -->
-          <script>
-            function handleBarchart() {
-              const data = document.getElementById("LeftChartDropdown").value;
-
-              console.log(data)
-
-              if (data === "Education") {
-                return fetch(`/education`, {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                })
-                  .then((response) => response.json())
-                  .then((data) => {
-                    return data;
-                    console.log(data);
-                  })
-                  .catch((error) => {
-                    console.error("Error:", error);
-                  });
-              }
-              else if (data === "Marital_Status") {
-                return fetch(`/marriage`, {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                })
-                  .then((response) => response.json())
-                  .then((data) => {
-                    return data;
-                  })
-                  .catch((error) => {
-                    console.error("Error:", error);
-                  });
-              }
-              else if (data === "amt") {
-                return fetch(`/amount`, {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                })
-                  .then((response) => response.json())
-                  .then((data) => {
-                    return data;
-                  })
-                  .catch((error) => {
-                    console.error("Error:", error);
-                  });
-              }
-              else {
-                return fetch(`/campaign`, {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                })
-                  .then((response) => response.json())
-                  .then((data) => {
-                    return data;
-                  })
-                  .catch((error) => {
-                    console.error("Error:", error);
-                  });
-              }
-
-            }
-          </script>
+          
         </div>
 
         <div class="dropdowntab ml-10">
@@ -449,22 +382,84 @@
 
 
       </div>
-      <div class="flex flex-wrap mt-6 -mx-3">
-        <div class="w-full max-w-full px-3 mt-0 mb-6 lg:mb-0 lg:w-5/12 lg:flex-none">
+      <div class="flex items-center justify-center flex-wrap mt-6 -mx-3">
+        <div class="w-full max-w-full px-3 mt-0 lg:w-7/12 lg:flex-none">
           <div
             class="border-black/12.5 shadow-soft-xl relative z-20 flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
+            <div class="border-black/12.5 mb-0 rounded-t-2xl border-b-0 border-solid bg-white p-6 pb-0">
+              <h6>BarChart</h6>
+              <p class="leading-normal text-sm">
+              </p>
+            </div>
             <div class="flex-auto p-4">
-              <h6>Bar</h6>
-              <div class="py-4 pr-1 mb-4 bg-gradient-to-tl from-gray-900 to-slate-800 rounded-xl">
-                <div>
-                  <canvas id="chart-bars" height="170"></canvas>
-                </div>
+              <div>
+                <canvas id="chart-line" height="300"></canvas>
               </div>
-
             </div>
           </div>
         </div>
-        <div class="w-full max-w-full px-3 mt-0 lg:w-7/12 lg:flex-none">
+        
+        <div class="w-full mt-6 max-w-full px-3 mt-0 lg:w-7/12 lg:flex-none">
+          <div class="dropdowncat mt-6 mx-0">
+            <div class="dropdowntableft ml-0 mr-12">
+              <p>Pilih atribut barchart :</p>
+              <select name="RingkasBerdasarkan" id="LeftChartDropdown" onchange="handleBarchart()">
+                <option value="">Pilih atribut:</option>
+                <option value="Education">Education</option>
+                <option value="Marital_Status">Marital_Status</option>
+                <option value="amt">Amount spent on-</option>
+                <option value="cmp">Accepted Campaigns</option>
+              </select>
+              <!-- Your JavaScript Code -->
+              
+            </div>
+    
+            <div class="dropdowntab ml-10">
+              <p>Atribut Target :</p>
+              <select name="RingkasBerdasarkan" id="Attribut1">
+                <option value="10">Pilih atribut yang akan digunakan:</option>
+                <option value="Year_Birth">Year_Birth</option>
+                <option value="Education">Education</option>
+                <option value="Marital_Status">Marital_Status</option>
+                <option value="Income">Income</option>
+                <option value="Kidhome">Kidhome</option>
+                <option value="Teenhome">Teenhome</option>
+                <option value="Dt_Customer">Dt_Customer</option>
+                <option value="Recency">Recency</option>
+                <option value="MntWines">MntWines</option>
+                <option value="MntFruits">MntFruits</option>
+                <option value="MntMeatProducts">MntMeatProducts</option>
+                <option value="MntFishProducts">MntFishProducts</option>
+                <option value="MntSweetProducts">MntSweetProducts</option>
+                <option value="MntGoldProds">MntGoldProds</option>
+                <option value="NumDealsPurchases">NumDealsPurchases</option>
+                <option value="NumWebPurchases">NumWebPurchases</option>
+                <option value="NumCatalogPurchases">NumCatalogPurchases</option>
+                <option value="NumStorePurchases">NumStorePurchases</option>
+                <option value="NumWebVisitsMonth">NumWebVisitsMonth</option>
+                <option value="AcceptedCmp1">AcceptedCmp1</option>
+                <option value="AcceptedCmp2">AcceptedCmp2</option>
+                <option value="AcceptedCmp3">AcceptedCmp3</option>
+                <option value="AcceptedCmp4">AcceptedCmp4</option>
+                <option value="AcceptedCmp5">AcceptedCmp5</option>
+                <option value="Complain">Complain</option>
+                <option value="Response">Response</option>
+              </select>
+            </div>
+    
+            <div class="dropdowntab mr-0">
+              <p>Kelompokan Berdasarkan :</p>
+              <select name="RingkasBerdasarkan" id="Attribut2">
+                <option value="20">Pilih atribut untuk mengelompokkan:</option>
+                <option value="Education">Education</option>
+                <option value="Marital_Status">Marital_Status</option>
+                <option value="Complain">Complain</option>
+                <option value="Response">Response</option>
+              </select>
+            </div>
+    
+    
+          </div>
           <div
             class="border-black/12.5 shadow-soft-xl relative z-20 flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
             <div class="border-black/12.5 mb-0 rounded-t-2xl border-b-0 border-solid bg-white p-6 pb-0">
@@ -474,7 +469,7 @@
             </div>
             <div class="flex-auto p-4">
               <div>
-                <canvas id="chart-line" height="300"></canvas>
+                <canvas id="scatter-plot" height="300"></canvas>
               </div>
             </div>
           </div>
@@ -519,3 +514,74 @@
 
 
 </html>
+
+<script>
+  function handleBarchart() {
+    const data = document.getElementById("LeftChartDropdown").value;
+
+    console.log(data)
+
+    if (data === "Education") {
+      return fetch(`/education`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          return data;
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+    else if (data === "Marital_Status") {
+      return fetch(`/marriage`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          return data;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+    else if (data === "amt") {
+      return fetch(`/amount`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          return data;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+    else {
+      return fetch(`/campaign`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          return data;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+
+  }
+</script>

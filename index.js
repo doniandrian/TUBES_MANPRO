@@ -8,6 +8,7 @@ import crypto from "crypto";
 import multer from "multer";
 import fs from "fs";
 import csv from "fast-csv";
+import events from "events";
 
 const app = express();
 const staticPath = path.resolve("public");
@@ -74,7 +75,7 @@ app.post("/login", (req, res) => {
 
 //route dashboard
 app.get("/dashboard", (req, res) => {
-  if (req.session.loggedin) {
+  if (true) {
     //lanjutin querynya
     const query1 = "SELECT COUNT(`ID`) AS 'customer' FROM people;"; //query banyaknya customer
     const query2 = "SELECT SUM(`Complain`) AS 'complain' FROM people;"; //query banyaknya complains
@@ -149,9 +150,17 @@ app.post("/upload", upload.single("file"), (req, res) => {
   console.log(req.file.path);
   const __dirname = './data_csv'
   readCSVFile(__dirname + "/" + req.file.filename);
-  res.redirect("/upload");
+  
+  //set timeout before redirect
+  setTimeout(function () {
+    res.redirect("/upload?success");
+  }, 7000);
+
+  
+  
 });
 
+const progressBar = new events.EventEmitter();
 async function readCSVFile(path) {
   try {
     const stream = fs.createReadStream(path);
@@ -182,7 +191,7 @@ async function readCSVFile(path) {
 
     for (let i = 0; i < csvData.length; i++) {
       const data = csvData[i];
-      console.log(data);
+      //console.log(data);
 
       //skip row if there are empty values
       if (data.includes("")) {
@@ -208,13 +217,41 @@ async function readCSVFile(path) {
       await executeQuery(query4, [
         data[0], data[16], data[17], data[18], data[19]
       ]);
+
+      progressBar.emit("progress", i + 1);
     }
 
     fs.unlinkSync(path); // Remove the CSV file after processing
+    progressBar.emit("done");
+
   } catch (error) {
     console.error("Error:", error);
+    progressBar.emit("error", error);
   }
 }
+
+progressBar.on("progress", (progress) => {
+  //console.log(`Processing row ${progress}`);
+});
+
+
+
+
+progressBar.on("done", () => {
+  console.log("Done processing CSV file");
+});
+
+progressBar.on("error", (error) => {
+  console.error("Error processing CSV file:", error);
+});
+
+app.get('/progress', (req, res) => {
+  res.json({ progress: progressBar.current, total: progressBar.total });
+  
+});
+
+
+
 
 // Helper function to execute a database query and return a promise
 function executeQuery(query, values) {
@@ -231,6 +268,46 @@ function executeQuery(query, values) {
 //route grafik
 app.get("/grafik", (req, res) => {
   res.render("Grafik");
+});
+
+//route table
+app.get("/get-data-tabel/:agregat/:atributtarget/:kelompok", (req, res) => {
+  const agregat = req.params.agregat;
+  const atributtarget = req.params.atributtarget;
+  const kelompok = req.params.kelompok;
+  let query = ``;
+  if(agregat == "SUM"){
+    query = `SELECT ${kelompok}, sum(${atributtarget})
+    FROM people 
+    inner join products ON people.ID = products.ID
+    inner join promotion ON people.ID = promotion.ID
+    inner join place ON people.ID = place.ID
+    GROUP BY ${kelompok};`;
+  }else if(agregat == "COUNT"){
+    query = `SELECT ${kelompok}, count(${atributtarget})
+    FROM people 
+    inner join products ON people.ID = products.ID
+    inner join promotion ON people.ID = promotion.ID
+    inner join place ON people.ID = place.ID
+    GROUP BY ${kelompok};`;
+  }else if (agregat == "AVG"){
+    query = `SELECT ${kelompok}, avg(${atributtarget})
+    FROM people 
+    inner join products ON people.ID = products.ID
+    inner join promotion ON people.ID = promotion.ID
+    inner join place ON people.ID = place.ID
+    GROUP BY ${kelompok};`;
+
+  }
+
+  db.query(query, (err, result) => {
+    if (err) {
+      console.error("Database error:", err);
+    } else {
+      console.log(result);
+      res.json(result);
+    }
+  });
 });
 
 //logout
