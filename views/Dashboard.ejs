@@ -247,6 +247,7 @@
                     <div>
                       <p class="mb-0 font-sans font-semibold leading-normal text-sm">Complaints</p>
                       <h5 class="mb-0 font-bold">
+                        <% if(complain == null) complain=0 %>
                         <%= complain %>
                         <span class="leading-normal text-red-600 text-sm font-weight-bolder"></span>
                       </h5>
@@ -271,6 +272,7 @@
                     <div>
                       <p class="mb-0 font-sans font-semibold leading-normal text-sm">Visit Per Month</p>
                       <h5 class="mb-0 font-bold">
+                        <% if(visit == null) visit=0 %>
                         <%= visit %>
                         <span class="leading-normal text-sm font-weight-bolder text-lime-500"></span>
                       </h5>
