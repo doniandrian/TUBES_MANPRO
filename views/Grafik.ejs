@@ -196,9 +196,9 @@
             <p>Agregat Menggunakan :</p>
             <select name="RingkasBerdasarkan" id="LeftChartDropdown">
               <option value="">Pilih fungsi:</option>
-              <option value="">SUM (Cari nilai jumlah total)</option>
-              <option value="">COUNT (Hitung jumlah data)</option>
-              <option value="">AVG (Hitung rata - rata data)</option>
+              <option value="SUM">SUM (Cari nilai jumlah total)</option>
+              <option value="COUNT">COUNT (Hitung jumlah data)</option>
+              <option value="AVG">AVG (Hitung rata - rata data)</option>
             </select>
           </div>
     
@@ -247,18 +247,23 @@
           </div>
         </div>
 
-        <button class="CRButton">Create Table</button>
-        <div class="tablemaster">
-          <table class="tablemain">
-            <tr class="tableagr">
-              <th style="width: 300px;">Judul 1</th>
-              <th style="width: 300px;">Judul 2</th>
-            </tr>
-            <tr class="tableagr">
-              <td style="width: 300px;">data 1</td>
-              <td style="width: 300px;">data 2</td>
-            </tr>
-          </table>
+        <button class="CRButton" id="confirmbtn" onclick="submitclick()">Confirm</button>
+        <div class="container">
+	
+          <div class="table" id="table">
+            <div class="table-header">
+              <div id="nameHeader" class="header__item"><a id="name" class="filter__link" >Atribut Target</a></div>
+              <div id="winsHeader" class="header__item"><a id="wins" class="filter__link filter__link--number" >Agregat</a></div>
+
+              
+            </div>
+            <div class="table-content" id="table-content">	
+              <div class="table-row">		
+                
+              </div>
+              
+            </div>	
+          </div>
         </div>
     </body>
 
@@ -272,3 +277,183 @@
   <!-- main script file  -->
   <script src="js/soft-ui-dashboard-tailwind.js" async></script>
 </html>
+
+<script>
+  
+  function submitclick(){
+    const agregat = document.getElementById('LeftChartDropdown').value;
+    const atributtarget = document.getElementById('Attribut1').value;
+    const kelompok = document.getElementById('Attribut2').value;
+
+    console.log(agregat);
+    console.log(atributtarget);
+    console.log(kelompok);
+
+    //fetch data from server
+
+    fetchdata(agregat,atributtarget,kelompok).then((data) =>{
+      updateTable(data);
+    });
+    
+
+    
+  }
+  function fetchdata(agregat,atributtarget,kelompok) {
+      
+      return fetch(`/get-data-tabel/${agregat}/${atributtarget}/${kelompok}`)
+        .then((response) => response.json())
+        .then((data) => {
+          return data;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  
+  function updateTable(data){
+    const table = document.getElementById('table');
+    const tableContent = document.querySelector('.table-content');
+  
+    tableContent.innerHTML = '';
+    
+    data.forEach(row => {
+        row = Object.values(row);
+        const tableRow = document.createElement('div');
+        tableRow.classList.add('table-row');
+
+        const nameCell = document.createElement('div');
+        nameCell.classList.add('table-data');
+        nameCell.textContent = row[0];
+
+        const winsCell = document.createElement('div');
+        winsCell.classList.add('table-data');
+        winsCell.textContent = row[1];
+
+        tableRow.appendChild(nameCell);
+        tableRow.appendChild(winsCell);
+
+        tableContent.appendChild(tableRow);
+
+      });
+      updateHeader();
+
+  }
+
+  function updateHeader() {
+  const nameHeader = document.getElementById('nameHeader');
+  const winsHeader = document.getElementById('winsHeader');
+
+  const agregat = document.getElementById('LeftChartDropdown').value;
+  const kelompok = document.getElementById('Attribut2').value;
+
+  // Get the selected attributes (replace these with your actual logic)
+  const selectedNameAttribute = document.getElementById('Attribut1').value;
+  const selectedWinsAttribute = document.getElementById('LeftChartDropdown').value;
+
+  // Update the header text based on selected attributes
+  nameHeader.querySelector('a').textContent = selectedNameAttribute;
+  winsHeader.querySelector('a').textContent = selectedWinsAttribute;
+}
+
+
+</script>
+
+
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
+
+:root {
+ 
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  padding: var(--base-spacing-unit);
+  font-family: 'Source Sans Pro', sans-serif;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+.container {
+
+  max-width: 1000px;
+  margin-right: auto;
+  margin-left: 22%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table {
+  --base-spacing-unit: 24px;
+  --half-spacing-unit: calc(var(--base-spacing-unit) / 2);
+  --color-alpha: #1772FF;
+  --color-form-highlight: #EEEEEE;
+  width: 100%;
+  margin-left: 50px;
+  border: 1px solid var(--color-form-highlight);
+}
+
+.table-header {
+  display: flex;
+  width: 100%;
+  background: #000;
+  padding: calc(var(--half-spacing-unit) * 1.5) 0;
+}
+
+.table-row {
+  display: flex;
+  width: 100%;
+  padding: calc(var(--half-spacing-unit) * 1.5) 0;
+}
+
+.table-row:nth-of-type(odd) {
+  background: var(--color-form-highlight);
+}
+
+.table-data,
+.header__item {
+  flex: 1 1 20%;
+  text-align: center;
+}
+
+.header__item {
+  text-transform: uppercase;
+}
+
+.filter__link {
+  color: white;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  padding-left: var(--base-spacing-unit);
+  padding-right: var(--base-spacing-unit);
+}
+
+.filter__link::after {
+  content: '';
+  position: absolute;
+  right: calc(-1 * var(--half-spacing-unit) * 1.5);
+  color: white;
+  font-size: var(--half-spacing-unit);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.filter__link.desc::after {
+  content: '(desc)';
+}
+
+.filter__link.asc::after {
+  content: '(asc)';
+}
+
+</style>
