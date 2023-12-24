@@ -103,6 +103,9 @@ app.get("/dashboard", (req, res) => {
                     console.error("Database error:", err);
                   } else {
                     console.log(result4);
+                    if (result2[0].complain === 0) {
+                      result2[0].complain = 0
+                    }
                     res.render("Dashboard", {
                       customer: result[0].customer,
                       complain: result2[0].complain,
@@ -324,4 +327,40 @@ app.get("/logout", (req, res) => {
 
 app.listen(8080, () => {
   console.log("Server started on port 8080");
+});
+
+app.post("/education", (req, res) => {
+  const query = "select education, count(education) from people group by education;";
+  db.query(query, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+});
+
+app.post("/marriage", (req, res) => {
+  const query = "select Marital_Status, count(Marital_Status) from people group by Marital_Status;";
+  db.query(query, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+});
+
+app.post("/amount", (req, res) => {
+  const query = "SELECT 'MntWines' AS Product, COUNT(MntWines) AS Count FROM products UNION SELECT 'MntFruits' AS Product, COUNT(MntFruits) AS Count FROM products UNION SELECT 'MntMeatProducts' AS Product, COUNT(MntMeatProducts) AS Count FROM products UNION SELECT 'MntFishProducts' AS Product, COUNT(MntFishProducts) AS Count FROM products UNION SELECT 'MntSweetProducts' AS Product, COUNT(MntSweetProducts) AS Count FROM products UNION SELECT 'MntGoldProds' AS Product, COUNT(MntGoldProds) AS Count FROM products;";
+  db.query(query, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+});
+
+app.post("/campaign", (req, res) => {
+  const query = "SELECT 'AcceptedCmp1' AS Campaign, COUNT(AcceptedCmp1) AS Count FROM Promotion UNION SELECT 'AcceptedCmp2' AS Campaign, COUNT(AcceptedCmp2) AS Count FROM Promotion UNION SELECT 'AcceptedCmp3' AS Campaign, COUNT(AcceptedCmp3) AS Count FROM Promotion UNION SELECT 'AcceptedCmp4' AS Campaign, COUNT(AcceptedCmp4) AS Count FROM Promotion UNION SELECT 'AcceptedCmp5' AS Campaign, COUNT(AcceptedCmp5) AS Count FROM Promotion;";
+  db.query(query, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
 });
