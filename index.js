@@ -8,6 +8,7 @@ import crypto from "crypto";
 import multer from "multer";
 import fs from "fs";
 import csv from "fast-csv";
+import events from "events";
 
 const app = express();
 const staticPath = path.resolve("public");
@@ -102,6 +103,9 @@ app.get("/dashboard", (req, res) => {
                     console.error("Database error:", err);
                   } else {
                     console.log(result4);
+                    if (result2[0].complain === 0) {
+                      result2[0].complain = 0
+                    }
                     res.render("Dashboard", {
                       customer: result[0].customer,
                       complain: result2[0].complain,
@@ -146,9 +150,17 @@ app.post("/upload", upload.single("file"), (req, res) => {
   console.log(req.file.path);
   const __dirname = './data_csv'
   readCSVFile(__dirname + "/" + req.file.filename);
-  res.redirect("/upload");
+  
+  //set timeout before redirect
+  setTimeout(function () {
+    res.redirect("/upload?success");
+  }, 7000);
+
+  
+  
 });
 
+const progressBar = new events.EventEmitter();
 async function readCSVFile(path) {
   try {
     const stream = fs.createReadStream(path);
@@ -179,7 +191,7 @@ async function readCSVFile(path) {
 
     for (let i = 0; i < csvData.length; i++) {
       const data = csvData[i];
-      console.log(data);
+      //console.log(data);
 
       //skip row if there are empty values
       if (data.includes("")) {
@@ -205,13 +217,41 @@ async function readCSVFile(path) {
       await executeQuery(query4, [
         data[0], data[16], data[17], data[18], data[19]
       ]);
+
+      progressBar.emit("progress", i + 1);
     }
 
     fs.unlinkSync(path); // Remove the CSV file after processing
+    progressBar.emit("done");
+
   } catch (error) {
     console.error("Error:", error);
+    progressBar.emit("error", error);
   }
 }
+
+progressBar.on("progress", (progress) => {
+  //console.log(`Processing row ${progress}`);
+});
+
+
+
+
+progressBar.on("done", () => {
+  console.log("Done processing CSV file");
+});
+
+progressBar.on("error", (error) => {
+  console.error("Error processing CSV file:", error);
+});
+
+app.get('/progress', (req, res) => {
+  res.json({ progress: progressBar.current, total: progressBar.total });
+  
+});
+
+
+
 
 // Helper function to execute a database query and return a promise
 function executeQuery(query, values) {
@@ -228,6 +268,46 @@ function executeQuery(query, values) {
 //route grafik
 app.get("/grafik", (req, res) => {
   res.render("Grafik");
+});
+
+//route table
+app.get("/get-data-tabel/:agregat/:atributtarget/:kelompok", (req, res) => {
+  const agregat = req.params.agregat;
+  const atributtarget = req.params.atributtarget;
+  const kelompok = req.params.kelompok;
+  let query = ``;
+  if(agregat == "SUM"){
+    query = `SELECT ${kelompok}, sum(${atributtarget})
+    FROM people 
+    inner join products ON people.ID = products.ID
+    inner join promotion ON people.ID = promotion.ID
+    inner join place ON people.ID = place.ID
+    GROUP BY ${kelompok};`;
+  }else if(agregat == "COUNT"){
+    query = `SELECT ${kelompok}, count(${atributtarget})
+    FROM people 
+    inner join products ON people.ID = products.ID
+    inner join promotion ON people.ID = promotion.ID
+    inner join place ON people.ID = place.ID
+    GROUP BY ${kelompok};`;
+  }else if (agregat == "AVG"){
+    query = `SELECT ${kelompok}, avg(${atributtarget})
+    FROM people 
+    inner join products ON people.ID = products.ID
+    inner join promotion ON people.ID = promotion.ID
+    inner join place ON people.ID = place.ID
+    GROUP BY ${kelompok};`;
+
+  }
+
+  db.query(query, (err, result) => {
+    if (err) {
+      console.error("Database error:", err);
+    } else {
+      console.log(result);
+      res.json(result);
+    }
+  });
 });
 
 //logout
@@ -247,4 +327,40 @@ app.get("/logout", (req, res) => {
 
 app.listen(8080, () => {
   console.log("Server started on port 8080");
+});
+
+app.post("/education", (req, res) => {
+  const query = "select education, count(education) from people group by education;";
+  db.query(query, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+});
+
+app.post("/marriage", (req, res) => {
+  const query = "select Marital_Status, count(Marital_Status) from people group by Marital_Status;";
+  db.query(query, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+});
+
+app.post("/amount", (req, res) => {
+  const query = "SELECT 'MntWines' AS Product, COUNT(MntWines) AS Count FROM products UNION SELECT 'MntFruits' AS Product, COUNT(MntFruits) AS Count FROM products UNION SELECT 'MntMeatProducts' AS Product, COUNT(MntMeatProducts) AS Count FROM products UNION SELECT 'MntFishProducts' AS Product, COUNT(MntFishProducts) AS Count FROM products UNION SELECT 'MntSweetProducts' AS Product, COUNT(MntSweetProducts) AS Count FROM products UNION SELECT 'MntGoldProds' AS Product, COUNT(MntGoldProds) AS Count FROM products;";
+  db.query(query, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+});
+
+app.post("/campaign", (req, res) => {
+  const query = "SELECT 'AcceptedCmp1' AS Campaign, COUNT(AcceptedCmp1) AS Count FROM Promotion UNION SELECT 'AcceptedCmp2' AS Campaign, COUNT(AcceptedCmp2) AS Count FROM Promotion UNION SELECT 'AcceptedCmp3' AS Campaign, COUNT(AcceptedCmp3) AS Count FROM Promotion UNION SELECT 'AcceptedCmp4' AS Campaign, COUNT(AcceptedCmp4) AS Count FROM Promotion UNION SELECT 'AcceptedCmp5' AS Campaign, COUNT(AcceptedCmp5) AS Count FROM Promotion;";
+  db.query(query, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
 });
