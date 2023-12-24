@@ -75,7 +75,7 @@ app.post("/login", (req, res) => {
 
 //route dashboard
 app.get("/dashboard", (req, res) => {
-  if (req.session.loggedin) {
+  if (true) {
     //lanjutin querynya
     const query1 = "SELECT COUNT(`ID`) AS 'customer' FROM people;"; //query banyaknya customer
     const query2 = "SELECT SUM(`Complain`) AS 'complain' FROM people;"; //query banyaknya complains

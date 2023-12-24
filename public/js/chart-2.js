@@ -15,7 +15,7 @@ gradientStroke2.addColorStop(0.2, "rgba(72,72,176,0.0)");
 gradientStroke2.addColorStop(0, "rgba(20,23,39,0)"); //purple colors
 
 new Chart(ctx2, {
-  type: "line",
+  type: "bar",
   data: {
     labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [
