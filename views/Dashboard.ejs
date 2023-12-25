@@ -402,8 +402,8 @@
         <div class="w-full mt-6 max-w-full px-3 mt-0 lg:w-7/12 lg:flex-none">
           <div class="dropdowncat mt-6 mx-0">
             <div class="dropdowntableft ml-0 mr-12">
-              <p>Pilih atribut barchart :</p>
-              <select name="RingkasBerdasarkan" id="LeftChartDropdown" onchange="handleBarchart()">
+              <p>Pilih atribut barchart:</p>
+              <select name="RingkasBerdasarkan" id="LeftChartDropdown" onchange="handleBarchart('left')">
                 <option value="">Pilih atribut:</option>
                 <option value="Education">Education</option>
                 <option value="Marital_Status">Marital_Status</option>
@@ -415,8 +415,8 @@
             </div>
     
             <div class="dropdowntab ml-10">
-              <p>Atribut Target :</p>
-              <select name="RingkasBerdasarkan" id="Attribut1">
+              <p>Pilih atribut scatter:</p>
+              <select name="RingkasBerdasarkan" id="RightChartDropdown" onchange="handleBarchart('right')">
                 <option value="10">Pilih atribut yang akan digunakan:</option>
                 <option value="Year_Birth">Year_Birth</option>
                 <option value="Education">Education</option>
@@ -516,72 +516,89 @@
 </html>
 
 <script>
-  function handleBarchart() {
-    const data = document.getElementById("LeftChartDropdown").value;
+  function handleBarchart(chartType) {
+  const dropdownId = chartType === 'left' ? 'LeftChartDropdown' : 'RightChartDropdown';
+  const data = document.getElementById(dropdownId).value;
+  console.log(data);
 
-    console.log(data)
+  let url = '';
 
-    if (data === "Education") {
-      return fetch(`/education`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          return data;
-          console.log(data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+  if (chartType === 'left') {
+    // Barchart
+    if (data === 'Education') {
+      url = '/education';
+    } else if (data === 'Marital_Status') {
+      url = '/marriage';
+    } else if (data === 'amt') {
+      url = '/amount';
+    } else {
+      url = '/campaign';
     }
-    else if (data === "Marital_Status") {
-      return fetch(`/marriage`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          return data;
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
-    else if (data === "amt") {
-      return fetch(`/amount`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          return data;
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
-    else {
-      return fetch(`/campaign`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          return data;
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+  } else {
+    // Scatter plot
+    if (data === 'Income') {
+      url = '/income';
+    } else if (data === 'Kidhome') {
+      url = '/kidhome';
+    } else if (data === 'Teenhome') {
+      url = '/teenhome';
+    } else if (data === 'Dt_Customer') {
+      url = '/customerDate';
+    } else if (data === 'Recency') {
+      url = '/recency';
+    } else if (data === 'MntWines') {
+      url = '/mntWines';
+    } else if (data === 'MntFruits') {
+      url = '/mntFruits';
+    } else if (data === 'MntMeatProducts') {
+      url = '/mntMeatProducts';
+    } else if (data === 'MntFishProducts') {
+      url = '/mntFishProducts';
+    } else if (data === 'MntSweetProducts') {
+      url = '/mntSweetProducts';
+    } else if (data === 'MntGoldProds') {
+      url = '/mntGoldProds';
+    } else if (data === 'NumDealsPurchases') {
+      url = '/numDealsPurchases';
+    } else if (data === 'NumWebPurchases') {
+      url = '/numWebPurchases';
+    } else if (data === 'NumCatalogPurchases') {
+      url = '/numCatalogPurchases';
+    } else if (data === 'NumStorePurchases') {
+      url = '/numStorePurchases';
+    } else if (data === 'NumWebVisitsMonth') {
+      url = '/numWebVisitsMonth';
+    } else if (data === 'AcceptedCmp1') {
+      url = '/acceptedCmp1';
+    } else if (data === 'AcceptedCmp2') {
+      url = '/acceptedCmp2';
+    } else if (data === 'AcceptedCmp3') {
+      url = '/acceptedCmp3';
+    } else if (data === 'AcceptedCmp4') {
+      url = '/acceptedCmp4';
+    } else if (data === 'AcceptedCmp5') {
+      url = '/acceptedCmp5';
+    } else if (data === 'Complain') {
+      url = '/complain';
+    } else if (data === 'Response') {
+      url = '/response';
     }
 
   }
+  if (url) {
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+}
 </script>
