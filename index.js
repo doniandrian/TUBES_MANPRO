@@ -150,14 +150,14 @@ app.post("/upload", upload.single("file"), (req, res) => {
   console.log(req.file.path);
   const __dirname = './data_csv'
   readCSVFile(__dirname + "/" + req.file.filename);
-  
+
   //set timeout before redirect
   setTimeout(function () {
     res.redirect("/upload?success");
   }, 7000);
 
-  
-  
+
+
 });
 
 const progressBar = new events.EventEmitter();
@@ -247,7 +247,7 @@ progressBar.on("error", (error) => {
 
 app.get('/progress', (req, res) => {
   res.json({ progress: progressBar.current, total: progressBar.total });
-  
+
 });
 
 
@@ -276,21 +276,21 @@ app.get("/get-data-tabel/:agregat/:atributtarget/:kelompok", (req, res) => {
   const atributtarget = req.params.atributtarget;
   const kelompok = req.params.kelompok;
   let query = ``;
-  if(agregat == "SUM"){
+  if (agregat == "SUM") {
     query = `SELECT ${kelompok}, sum(${atributtarget})
     FROM people 
     inner join products ON people.ID = products.ID
     inner join promotion ON people.ID = promotion.ID
     inner join place ON people.ID = place.ID
     GROUP BY ${kelompok};`;
-  }else if(agregat == "COUNT"){
+  } else if (agregat == "COUNT") {
     query = `SELECT ${kelompok}, count(${atributtarget})
     FROM people 
     inner join products ON people.ID = products.ID
     inner join promotion ON people.ID = promotion.ID
     inner join place ON people.ID = place.ID
     GROUP BY ${kelompok};`;
-  }else if (agregat == "AVG"){
+  } else if (agregat == "AVG") {
     query = `SELECT ${kelompok}, avg(${atributtarget})
     FROM people 
     inner join products ON people.ID = products.ID
@@ -333,14 +333,36 @@ app.listen(8080, () => {
 app.get("/get-data-bar/:data", (req, res) => {
   const data = req.params.data;
   let query = ``;
-  if(data == "Education"){
-    query = 'select education as label, count(education) as counts from people group by education;';
-  }else if(data == "Marital_Status"){
-    query = 'select Marital_Status as label, count(Marital_Status) as counts from people group by Marital_Status;';
-  }else if (data == "amt"){
-    query = "SELECT 'MntWines' AS label, COUNT(MntWines) AS counts FROM products UNION SELECT 'MntFruits' AS label, COUNT(MntFruits) AS counts FROM products UNION SELECT 'MntMeatProducts' AS label, COUNT(MntMeatProducts) AS counts FROM products UNION SELECT 'MntFishProducts' AS label, COUNT(MntFishProducts) AS counts FROM products UNION SELECT 'MntSweetProducts' AS label, COUNT(MntSweetProducts) AS counts FROM products UNION SELECT 'MntGoldProds' AS label, COUNT(MntGoldProds) AS counts FROM products;";
-  }else if (data == "cmp"){
-    query = "SELECT 'AcceptedCmp1' AS label, COUNT(AcceptedCmp1) AS counts FROM Promotion UNION SELECT 'AcceptedCmp2' AS label, COUNT(AcceptedCmp2) AS counts FROM Promotion UNION SELECT 'AcceptedCmp3' AS label, COUNT(AcceptedCmp3) AS counts FROM Promotion UNION SELECT 'AcceptedCmp4' AS label, COUNT(AcceptedCmp4) AS counts FROM Promotion UNION SELECT 'AcceptedCmp5' AS label, COUNT(AcceptedCmp5) AS counts FROM Promotion;";
+  if (data == "Year_Birth" ||
+    data == "Education" ||
+    data == "Marital_Status" ||
+    data == "Income" ||
+    data == "Kidhome" ||
+    data == "Teenhome" ||
+    data == "Dt_Customer" ||
+    data == "Recency" ||
+    data == "Complain") {
+    query = `Select ${data} as label, count(${data}) as counts from people group by ${data}`;
+  } else if (data == "MntWines" ||
+    data == "MntFruits" ||
+    data == "MntMeatProducts" ||
+    data == "MntFishProducts" ||
+    data == "MntSweetProducts" ||
+    data == "MntGoldProds") {
+    query = `Select ${data} as label, count(${data}) as counts from products group by ${data}`;
+  } else if (data == "NumDealsPurchases" ||
+    data == "AcceptedCmp1" ||
+    data == "AcceptedCmp2" ||
+    data == "AcceptedCmp3" ||
+    data == "AcceptedCmp4" ||
+    data == "AcceptedCmp5" ||
+    data == "Response") {
+    query = `Select ${data} as label, count(${data}) as counts from promotion group by ${data}`;
+  } else if (data == "NumWebPurchases" ||
+    data == "NumCatalogPurchases" ||
+    data == "NumStorePurchases" ||
+    data == "NumWebVisitsMonth") {
+    query = `Select ${data} as label, count(${data}) as counts from place group by ${data}`;
   }
 
   db.query(query, (err, result) => {
