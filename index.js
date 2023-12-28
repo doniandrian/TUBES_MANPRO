@@ -329,38 +329,27 @@ app.listen(8080, () => {
   console.log("Server started on port 8080");
 });
 
-app.post("/education", (req, res) => {
-  const query = "select education, count(education) from people group by education;";
-  db.query(query, (err) => {
+//bwt barchart dashboard
+app.get("/get-data-bar/:data", (req, res) => {
+  const data = req.params.data;
+  let query = ``;
+  if(data == "Education"){
+    query = 'select education as label, count(education) as counts from people group by education;';
+  }else if(data == "Marital_Status"){
+    query = 'select Marital_Status as label, count(Marital_Status) as counts from people group by Marital_Status;';
+  }else if (data == "amt"){
+    query = "SELECT 'MntWines' AS label, COUNT(MntWines) AS counts FROM products UNION SELECT 'MntFruits' AS label, COUNT(MntFruits) AS counts FROM products UNION SELECT 'MntMeatProducts' AS label, COUNT(MntMeatProducts) AS counts FROM products UNION SELECT 'MntFishProducts' AS label, COUNT(MntFishProducts) AS counts FROM products UNION SELECT 'MntSweetProducts' AS label, COUNT(MntSweetProducts) AS counts FROM products UNION SELECT 'MntGoldProds' AS label, COUNT(MntGoldProds) AS counts FROM products;";
+  }else if (data == "cmp"){
+    query = "SELECT 'AcceptedCmp1' AS label, COUNT(AcceptedCmp1) AS counts FROM Promotion UNION SELECT 'AcceptedCmp2' AS label, COUNT(AcceptedCmp2) AS counts FROM Promotion UNION SELECT 'AcceptedCmp3' AS label, COUNT(AcceptedCmp3) AS counts FROM Promotion UNION SELECT 'AcceptedCmp4' AS label, COUNT(AcceptedCmp4) AS counts FROM Promotion UNION SELECT 'AcceptedCmp5' AS label, COUNT(AcceptedCmp5) AS counts FROM Promotion;";
+  }
+
+  db.query(query, (err, result) => {
     if (err) {
-      console.log(err);
+      console.error("Database error:", err);
+    } else {
+      console.log(result);
+      res.json(result);
     }
   });
 });
 
-app.post("/marriage", (req, res) => {
-  const query = "select Marital_Status, count(Marital_Status) from people group by Marital_Status;";
-  db.query(query, (err) => {
-    if (err) {
-      console.log(err);
-    }
-  });
-});
-
-app.post("/amount", (req, res) => {
-  const query = "SELECT 'MntWines' AS Product, COUNT(MntWines) AS Count FROM products UNION SELECT 'MntFruits' AS Product, COUNT(MntFruits) AS Count FROM products UNION SELECT 'MntMeatProducts' AS Product, COUNT(MntMeatProducts) AS Count FROM products UNION SELECT 'MntFishProducts' AS Product, COUNT(MntFishProducts) AS Count FROM products UNION SELECT 'MntSweetProducts' AS Product, COUNT(MntSweetProducts) AS Count FROM products UNION SELECT 'MntGoldProds' AS Product, COUNT(MntGoldProds) AS Count FROM products;";
-  db.query(query, (err) => {
-    if (err) {
-      console.log(err);
-    }
-  });
-});
-
-app.post("/campaign", (req, res) => {
-  const query = "SELECT 'AcceptedCmp1' AS Campaign, COUNT(AcceptedCmp1) AS Count FROM Promotion UNION SELECT 'AcceptedCmp2' AS Campaign, COUNT(AcceptedCmp2) AS Count FROM Promotion UNION SELECT 'AcceptedCmp3' AS Campaign, COUNT(AcceptedCmp3) AS Count FROM Promotion UNION SELECT 'AcceptedCmp4' AS Campaign, COUNT(AcceptedCmp4) AS Count FROM Promotion UNION SELECT 'AcceptedCmp5' AS Campaign, COUNT(AcceptedCmp5) AS Count FROM Promotion;";
-  db.query(query, (err) => {
-    if (err) {
-      console.log(err);
-    }
-  });
-});
