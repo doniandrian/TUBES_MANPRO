@@ -500,19 +500,35 @@
 </html>
 
 <script>
+  let myChart;
+  let status = false;
   function handleBarchart() {
-    const data = document.getElementById("LeftChartDropdown").value;
+  const data = document.getElementById("LeftChartDropdown").value;
 
-    console.log(data)
+  console.log(data);
 
-    return fetch(`/get-data-bar/${data}`)
-      .then((response) => response.json())
-      .then((hasil) => {
-        initializeChart(hasil);
-        return hasil;
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
+  return fetch(`/get-data-bar/${data}`)
+    .then((response) => response.json())
+    .then((hasil) => {
+      if (status) {
+        console.log("update");
+        console.log(myChart);
+        myChart.destroy();
+        myChart = initializeChart(hasil);
+
+        
+      } else {
+        // If the chart doesn't exist, create a new one
+        myChart = initializeChart(hasil);
+        console.log(myChart);
+        status = true;
+      }
+
+      return hasil;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
 </script>
