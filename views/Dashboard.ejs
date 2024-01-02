@@ -398,16 +398,13 @@
             <div class="dropdowncat mt-6 mx-0">
 
               <div class="dropdowntab ml-10">
-                <p>Atribut Target :</p>
-                <select name="RingkasBerdasarkan" id="Attribut1">
+                <p>Atribut pertama :</p>
+                <select name="first" id="Attribut1">
                   <option value="10">Pilih atribut yang akan digunakan:</option>
                   <option value="Year_Birth">Year_Birth</option>
-                  <option value="Education">Education</option>
-                  <option value="Marital_Status">Marital_Status</option>
                   <option value="Income">Income</option>
                   <option value="Kidhome">Kidhome</option>
                   <option value="Teenhome">Teenhome</option>
-                  <option value="Dt_Customer">Dt_Customer</option>
                   <option value="Recency">Recency</option>
                   <option value="MntWines">MntWines</option>
                   <option value="MntFruits">MntFruits</option>
@@ -431,11 +428,30 @@
               </div>
 
               <div class="dropdowntab mr-0">
-                <p>Kelompokan Berdasarkan :</p>
-                <select name="RingkasBerdasarkan" id="Attribut2">
-                  <option value="20">Pilih atribut untuk mengelompokkan:</option>
-                  <option value="Education">Education</option>
-                  <option value="Marital_Status">Marital_Status</option>
+                <p>Atribut kedua :</p>
+                <select name="second" id="Attribut2" onchange="handleScatterChart(this)">
+                  <option value="10">Pilih atribut yang akan digunakan:</option>
+                  <option value="Year_Birth">Year_Birth</option>
+                  <option value="Income">Income</option>
+                  <option value="Kidhome">Kidhome</option>
+                  <option value="Teenhome">Teenhome</option>
+                  <option value="Recency">Recency</option>
+                  <option value="MntWines">MntWines</option>
+                  <option value="MntFruits">MntFruits</option>
+                  <option value="MntMeatProducts">MntMeatProducts</option>
+                  <option value="MntFishProducts">MntFishProducts</option>
+                  <option value="MntSweetProducts">MntSweetProducts</option>
+                  <option value="MntGoldProds">MntGoldProds</option>
+                  <option value="NumDealsPurchases">NumDealsPurchases</option>
+                  <option value="NumWebPurchases">NumWebPurchases</option>
+                  <option value="NumCatalogPurchases">NumCatalogPurchases</option>
+                  <option value="NumStorePurchases">NumStorePurchases</option>
+                  <option value="NumWebVisitsMonth">NumWebVisitsMonth</option>
+                  <option value="AcceptedCmp1">AcceptedCmp1</option>
+                  <option value="AcceptedCmp2">AcceptedCmp2</option>
+                  <option value="AcceptedCmp3">AcceptedCmp3</option>
+                  <option value="AcceptedCmp4">AcceptedCmp4</option>
+                  <option value="AcceptedCmp5">AcceptedCmp5</option>
                   <option value="Complain">Complain</option>
                   <option value="Response">Response</option>
                 </select>
@@ -486,7 +502,7 @@
 
 <!-- plugin for charts  -->
 <script src="/js/chart-1.js"></script>
- <script src="/js/chart-2.js"></script>
+<script src="/js/chart-2.js"></script>
 <script src="js/plugins/chartjs.min.js" async></script>
 <!-- plugin for scrollbar  -->
 <script src="js/plugins/perfect-scrollbar.min.js" async></script>
@@ -503,32 +519,62 @@
   let myChart = initializeChart([]);
   let status = false;
   function handleBarchart() {
-  const data = document.getElementById("LeftChartDropdown").value;
+    const data = document.getElementById("LeftChartDropdown").value;
 
-  console.log(data);
+    console.log(data);
 
-  return fetch(`/get-data-bar/${data}`)
-    .then((response) => response.json())
-    .then((hasil) => {
-      if (status) {
-        console.log("update");
-        console.log(myChart);
-        myChart.destroy();
-        myChart = initializeChart(hasil);
+    return fetch(`/get-data-bar/${data}`)
+      .then((response) => response.json())
+      .then((hasil) => {
+        if (status) {
+          console.log("update");
+          console.log(myChart);
+          myChart.destroy();
+          myChart = initializeChart(hasil);
 
-        
-      } else {
-        // If the chart doesn't exist, create a new one
-        myChart = initializeChart(hasil);
-        console.log(myChart);
-        status = true;
-      }
 
-      return hasil;
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-}
+        } else {
+          // If the chart doesn't exist, create a new one
+          myChart = initializeChart(hasil);
+          console.log(myChart);
+          status = true;
+        }
 
+        return hasil;
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+</script>
+<script>
+  let state = false;
+  let scatterChart = initializeScatterChart([]);
+  function handleScatterChart() {
+    const xAttribute = document.getElementById("Attribut1").value;
+    const yAttribute = document.getElementById("Attribut2").value;
+
+    console.log(xAttribute, yAttribute);
+
+    return fetch(`/get-data-scatter/${xAttribute}/${yAttribute}`)
+      .then((response) => response.json())
+      .then((scatterData) => {
+        if (state) {
+          console.log("update scatter plot");
+          console.log(scatterChart);
+          scatterChart.destroy();
+          scatterChart = initializeScatterChart(scatterData);
+        } else {
+          scatterChart.destroy();
+          scatterChart = initializeScatterChart(scatterData);
+          console.log(scatterChart);
+          state = true;
+        }
+
+        return scatterData;
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
 </script>

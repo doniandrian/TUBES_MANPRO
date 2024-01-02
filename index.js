@@ -375,3 +375,17 @@ app.get("/get-data-bar/:data", (req, res) => {
   });
 });
 
+//bwt scatterplot dashboard
+app.get("/get-data-scatter/:xAttribute/:yAttribute", (req, res) => {
+  const x = req.params.xAttribute;
+  const y = req.params.yAttribute;
+  const query = `SELECT ${x} as x, ${y} as y FROM people INNER JOIN place ON people.ID = place.ID INNER JOIN products ON people.ID = products.ID INNER JOIN promotion ON people.ID = promotion.ID;`;
+  db.query(query, (err, result) => {
+    if (err) {
+      console.error("Database error:", err);
+    } else {
+      console.log("RESULTS!!!!:",result);
+      res.json(result);
+    }
+  });
+});
